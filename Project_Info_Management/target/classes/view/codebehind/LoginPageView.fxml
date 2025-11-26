@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.LoginPageView">
+<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.LoginPageView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="10.0" focusTraversable="true" height="73.0" stroke="#3a3e4d00" strokeType="INSIDE" width="610.0">
          <fill>
@@ -45,14 +45,13 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label alignment="CENTER" layoutX="321.0" layoutY="23.0" onMouseClicked="#handleHomeClick" prefHeight="17.0" prefWidth="64.0" style="-fx-cursor: hand;" text="Home" textAlignment="CENTER" textFill="WHITE" underline="true">
-         <font>
-            <Font size="18.0" />
-         </font>
+      <ImageView fitHeight="35.0" fitWidth="42.0" layoutX="12.0" layoutY="20.0" onMouseClicked="#handlePersonalAccountClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@images/default-avatar.jpg" />
+         </image>
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
+         </cursor></ImageView>
       <Label fx:id="accountHeader" alignment="CENTER" layoutX="47.0" layoutY="24.0" onMouseClicked="#handlePersonalAccountClick" prefHeight="27.0" prefWidth="81.0" style="-fx-cursor: hand;" text="Account" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
          <font>
             <Font size="18.0" />
@@ -61,21 +60,14 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <TextField layoutX="454.0" layoutY="21.0" onAction="#handleSearchBar" prefHeight="25.0" prefWidth="142.0" promptText="Search Here" style="-fx-background-color: #f0f0f0; -fx-border-color: #d4124e; -fx-background-radius: 20;">
+      <Label alignment="CENTER" layoutX="321.0" layoutY="23.0" onMouseClicked="#handleHomeClick" prefHeight="17.0" prefWidth="64.0" style="-fx-cursor: hand;" text="Home" textAlignment="CENTER" textFill="WHITE" underline="true">
          <font>
-            <Font size="14.0" />
+            <Font size="18.0" />
          </font>
          <cursor>
-            <Cursor fx:constant="TEXT" />
-         </cursor>
-      </TextField>
-      <ImageView fitHeight="35.0" fitWidth="42.0" layoutX="12.0" layoutY="20.0" onMouseClicked="#handlePersonalAccountClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-         <image>
-            <Image url="@images/default-avatar.jpg" />
-         </image>
-         <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+         </cursor>
+      </Label>
       <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="413.0" layoutY="20.0" onMouseClicked="#handleSearchButtoneClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@images/search-icon.png" />
@@ -84,25 +76,30 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <TextField layoutX="454.0" layoutY="21.0" onAction="#handleSearchBar" prefHeight="25.0" prefWidth="142.0" promptText="Search Here" style="-fx-background-color: #f0f0f0; -fx-border-color: #d4124e; -fx-background-radius: 20;">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
       <Label alignment="CENTER" layoutX="204.0" layoutY="163.0" prefHeight="35.0" prefWidth="201.0" text="Login" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <Separator layoutX="48.0" layoutY="207.0" prefHeight="6.0" prefWidth="513.0" />
-      <Button fx:id="loginSubmitButton" disable="true" layoutX="234.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #d4124e;" text="Login" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Label layoutX="96.0" layoutY="233.0" prefHeight="27.0" prefWidth="129.0" text="UserName / Email :" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label layoutX="96.0" layoutY="233.0" prefHeight="27.0" prefWidth="129.0" text="UserName:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <TextField fx:id="userNameTextFeild" layoutX="225.0" layoutY="234.0" prefHeight="25.0" prefWidth="253.0" promptText="User Name">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
       <Label fx:id="errorNotValidUsername" layoutX="229.0" layoutY="260.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a valid username" textFill="WHITE" wrapText="true">
          <font>
             <Font size="14.0" />
@@ -122,6 +119,14 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button fx:id="loginSubmitButton" disable="true" layoutX="234.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #d4124e;" text="Login" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
       <Label layoutX="218.0" layoutY="448.0" onMouseClicked="#handleNoAccountClick" prefHeight="55.0" prefWidth="174.0" text="Don't Have An Account? Click Here!" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
          <font>
             <Font size="14.0" />
@@ -130,10 +135,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <TextField fx:id="userNameTextFeild" layoutX="225.0" layoutY="234.0" prefHeight="25.0" prefWidth="253.0" promptText="User Name">
-         <cursor>
-            <Cursor fx:constant="TEXT" />
-         </cursor>
-      </TextField>
    </children>
 </AnchorPane>

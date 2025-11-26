@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.CreateAccountPageView">
+<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.StudentRegistrationPageView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="10.0" focusTraversable="true" height="73.0" stroke="#3a3e4d00" strokeType="INSIDE" width="610.0">
          <fill>
@@ -95,12 +95,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="userNameTextFeild" layoutX="225.0" layoutY="234.0" prefHeight="25.0" prefWidth="253.0" promptText="First Name">
+      <TextField fx:id="firstNameTextFeild" layoutX="225.0" layoutY="234.0" prefHeight="25.0" prefWidth="253.0" promptText="First Name">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="errorNotValidUsername" layoutX="229.0" layoutY="260.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a first name." textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotValidFirstName" layoutX="229.0" layoutY="260.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a first name." textFill="WHITE" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
@@ -110,12 +110,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="userNameTextFeild1" layoutX="225.0" layoutY="312.0" prefHeight="25.0" prefWidth="253.0" promptText="Last Name">
+      <TextField fx:id="lastNameTextFeild" layoutX="225.0" layoutY="312.0" prefHeight="25.0" prefWidth="253.0" promptText="Last Name">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="errorNotValidUsername1" layoutX="229.0" layoutY="338.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a last name." textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotValidLastName" layoutX="229.0" layoutY="338.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a last name." textFill="WHITE" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>

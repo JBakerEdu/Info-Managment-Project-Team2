@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.AccountProfilePageView">
+<AnchorPane fx:id="anchorPane" maxHeight="953.0" maxWidth="610.0" minHeight="953.0" minWidth="610.0" prefHeight="953.0" prefWidth="610.0" style="-fx-background-color: #3a3e4d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.dsdm.project.view.codebehind.AccountTeacherProfilePageView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="10.0" focusTraversable="true" height="73.0" stroke="#3a3e4d00" strokeType="INSIDE" width="610.0">
          <fill>
