@@ -93,20 +93,12 @@ public class StudentRegistrationPageView {
     void initialize() {
     	this.viewModel = new StudentProfile();
     	this.bindFields();
-    	
-//        assert accountHeader != null : "fx:id=\"accountHeader\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert anchorPane != null : "fx:id=\"anchorPane\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert confirmPasswordTextFeild != null : "fx:id=\"confirmPasswordTextFeild\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert createAccountSubmitButton != null : "fx:id=\"createAccountSubmitButton\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert emailTextFeild != null : "fx:id=\"emailTextFeild\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert errorNotConfirmedPassword != null : "fx:id=\"errorNotConfirmedPassword\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert errorNotCorrectPassword != null : "fx:id=\"errorNotCorrectPassword\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert errorNotValidEmail != null : "fx:id=\"errorNotValidEmail\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert errorNotValidUsername != null : "fx:id=\"errorNotValidUsername\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert errorNotValidUsername1 != null : "fx:id=\"errorNotValidUsername1\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert firstNameTextFeild != null : "fx:id=\"firstNameTextFeild\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert lastNameTextFeild != null : "fx:id=\"lastNameTextFeild\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
-//        assert passwordTextFeild != null : "fx:id=\"passwordTextFeild\" was not injected: check your FXML file 'TeacherRegistrationtPageView.fxml'.";
+    }
+
+    private void eventHanderlers() {
+        this.createAccountSubmitButton.setOnAction((event) -> {
+            this.viewModel.printInformation();
+        });
     }
 
     private void bindFields() {
@@ -118,40 +110,40 @@ public class StudentRegistrationPageView {
     }
     
     private boolean validateFields() {
-    	if (this.firstNameTextFeild.textProperty().getValue().isEmpty()) {
-    		this.errorNotValidFirstName.setVisible(true);
-    		return true;
-    	} else {
-    		this.errorNotValidFirstName.setVisible(false);
-    	}
-    	
-    	if (this.lastNameTextFeild.textProperty().getValue().isEmpty()) {
-    		this.errorNotValidLastName.setVisible(true);
-    		return true;
-    	} else {
-    		this.errorNotValidLastName.setVisible(false);
-    	}
-    	
-    	if (this.emailTextFeild.textProperty().getValue().isEmpty()) {
-    		this.errorNotValidEmail.setVisible(true);
-    		return true;
-    	} else {
-    		this.errorNotValidEmail.setVisible(false);
-    	}
-    	
-    	if (this.passwordTextFeild.textProperty().getValue().isEmpty() ||
-    			this.confirmPasswordTextFeild.textProperty().getValue().isEmpty() ||
-    			this.passwordTextFeild.textProperty().getValue() == 
-    			this.confirmPasswordTextFeild.textProperty().getValue()) {
-    		this.errorNotCorrectPassword.setVisible(true);
-    		this.errorNotConfirmedPassword.setVisible(true);
-    		return true;
-    	} else {
-    		this.errorNotCorrectPassword.setVisible(false);
-    		this.errorNotConfirmedPassword.setVisible(false);
-    	}
-    	
-    	return false;
+        if (this.firstNameTextFeild.textProperty().getValue().isEmpty()) {
+            this.errorNotValidFirstName.setVisible(true);
+            return true;
+        } else {
+            this.errorNotValidFirstName.setVisible(false);
+        }
+
+        if (this.lastNameTextFeild.textProperty().getValue().isEmpty()) {
+            this.errorNotValidLastName.setVisible(true);
+            return true;
+        } else {
+            this.errorNotValidLastName.setVisible(false);
+        }
+
+        if (this.emailTextFeild.textProperty().getValue().isEmpty()) {
+            this.errorNotValidEmail.setVisible(true);
+            return true;
+        } else {
+            this.errorNotValidEmail.setVisible(false);
+        }
+
+        if (this.passwordTextFeild.textProperty().getValue().isEmpty() ||
+                this.confirmPasswordTextFeild.textProperty().getValue().isEmpty() ||
+                this.passwordTextFeild.textProperty().getValue() ==
+                        this.confirmPasswordTextFeild.textProperty().getValue()) {
+            this.errorNotCorrectPassword.setVisible(true);
+            this.errorNotConfirmedPassword.setVisible(true);
+            return true;
+        } else {
+            this.errorNotCorrectPassword.setVisible(false);
+            this.errorNotConfirmedPassword.setVisible(false);
+        }
+
+        this.createAccountSubmitButton.setDisable(false);
+        return false;
     }
-    
 }

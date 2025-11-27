@@ -100,7 +100,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="errorNotValidFirstName" layoutX="229.0" layoutY="260.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a first name." textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotValidFirstName" layoutX="229.0" layoutY="260.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a first name." textFill="WHITE" wrapText="true" visible="false">
          <font>
             <Font size="14.0" />
          </font>
@@ -115,7 +115,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="errorNotValidLastName" layoutX="229.0" layoutY="338.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a last name." textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotValidLastName" layoutX="229.0" layoutY="338.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a last name." textFill="WHITE" wrapText="true" visible="false">
          <font>
             <Font size="14.0" />
          </font>
@@ -130,7 +130,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="errorNotValidEmail" layoutX="229.0" layoutY="418.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a valid Email" textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotValidEmail" layoutX="229.0" layoutY="418.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="You must enter a valid Email" textFill="WHITE" wrapText="true" visible="false">
          <font>
             <Font size="14.0" />
          </font>
@@ -144,7 +144,7 @@
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></PasswordField>
-      <Label fx:id="errorNotCorrectPassword" layoutX="231.0" layoutY="497.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="The password you entered is incorrect" textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotCorrectPassword" layoutX="231.0" layoutY="497.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="The password you entered is incorrect" textFill="WHITE" wrapText="true" visible="false">
          <font>
             <Font size="14.0" />
          </font>
@@ -158,12 +158,12 @@
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></PasswordField>
-      <Label fx:id="errorNotConfirmedPassword" layoutX="231.0" layoutY="575.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="The password you entered is incorrect" textFill="WHITE" wrapText="true">
+      <Label fx:id="errorNotConfirmedPassword" layoutX="231.0" layoutY="575.0" prefHeight="25.0" prefWidth="246.0" style="-fx-text-fill: red;" text="The password you entered is incorrect" textFill="WHITE" wrapText="true" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="createAccountSubmitButton" disable="true" layoutX="234.0" layoutY="631.0" mnemonicParsing="false" onAction="#handleCreateAccountButtonClick" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #d4124e;" text="Register" textFill="WHITE">
+      <Button fx:id="createAccountSubmitButton" disable="false" layoutX="234.0" layoutY="631.0" mnemonicParsing="false" onAction="#handleCreateAccountButtonClick" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #d4124e;" text="Register" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

@@ -1,6 +1,7 @@
 package edu.westga.dsdm.project.viewmodel;
 
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty ;
 
 public class StudentProfile {
 
@@ -11,7 +12,11 @@ public class StudentProfile {
 	private StringProperty confirmPasswordProperty;
 	
 	public StudentProfile() {
-		
+		this.firstNameProperty = new SimpleStringProperty("");
+		this.lastNameProperty = new SimpleStringProperty("");
+		this.emailProperty = new SimpleStringProperty("");
+		this.passwordProperty = new SimpleStringProperty("");
+		this.confirmPasswordProperty = new SimpleStringProperty("");
 	}
 	
 	public StringProperty firstNameProperty() {
