@@ -133,10 +133,11 @@ public class StudentRegistrationPageView {
 
         if (this.passwordTextFeild.textProperty().getValue().isEmpty() ||
                 this.confirmPasswordTextFeild.textProperty().getValue().isEmpty() ||
-                this.passwordTextFeild.textProperty().getValue() ==
-                        this.confirmPasswordTextFeild.textProperty().getValue()) {
+                !this.passwordTextFeild.textProperty().getValue().
+                        equals(this.confirmPasswordTextFeild.textProperty().getValue())) {
             this.errorNotCorrectPassword.setVisible(true);
             this.errorNotConfirmedPassword.setVisible(true);
+            this.resetPasswordTextFields();
             return true;
         } else {
             this.errorNotCorrectPassword.setVisible(false);
@@ -145,5 +146,10 @@ public class StudentRegistrationPageView {
 
         this.createAccountSubmitButton.setDisable(false);
         return false;
+    }
+
+    private void resetPasswordTextFields() {
+        this.passwordTextFeild.clear();
+        this.confirmPasswordTextFeild.clear();
     }
 }
