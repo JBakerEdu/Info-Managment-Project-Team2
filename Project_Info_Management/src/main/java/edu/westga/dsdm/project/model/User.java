@@ -1,87 +1,90 @@
 package edu.westga.dsdm.project.model;
 
 /**
- * Represents a user in the project portfolio system.
- * A user has a username, password, email, personal description, and a project manager.
- * 
- * @author Jacob Baker
- * @version Spring 2025
+ * Represents a user stored in the database.
+ * This model contains only database fields.
+ *
+ * @author Kate Anglin
+ * @version Fall 2025
  */
 public class User {
-    private String username;
-    private String password;
+    private int userId;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String description;
-    private ProjectManager projectManager;
+    private String passwordHash;
+    private String role;
 
     /**
-     * Creates a new User with the specified username, password, and email.
-     * Initializes the description to an empty string and creates a new ProjectManager.
+     * Constructs a User with the given database values.
      *
-     * @param username the username for the user
-     * @param password the password for the user
-     * @param email the email address of the user
+     * @param userId the user's unique database ID
+     * @param firstName the user's first name
+     * @param lastName the user's last name
+     * @param email the user's email address
+     * @param passwordHash the hashed password from the database
+     * @param role the role at events
      */
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
+    public User(int userId, String firstName, String lastName, String email, String passwordHash, String role) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.description = "";
-        this.projectManager = new ProjectManager();
+        this.passwordHash = passwordHash;
+        this.role = role;
     }
 
     /**
-     * Gets the username of this user.
+     * Gets the UserId
      *
-     * @return the username
+     * @return the user id
      */
-    public String getUsername() {
-        return this.username;
+    public int getUserId() {
+        return this.userId;
     }
 
     /**
-     * Gets the password of this user.
+     * Gets the first name
      *
-     * @return the password
+     * @return the user first name
      */
-    public String getPassword() {
-        return this.password;
+    public String getFirstName() {
+        return this.firstName;
     }
 
     /**
-     * Gets the email of this user.
+     * Gets the last name
      *
-     * @return the email
+     * @return the user last name
+     */
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    /**
+     * Gets the email
+     *
+     * @return the users email
      */
     public String getEmail() {
         return this.email;
     }
 
     /**
-     * Gets the personal description of this user.
+     * Gets the hashed password
      *
-     * @return the user's description
+     * @return the password hash
      */
-    public String getDescription() {
-        return this.description;
+    public String getPasswordHash() {
+        return this.passwordHash;
     }
 
     /**
-     * Sets the personal description for this user.
+     * Gets the role of the user
      *
-     * @param description the new description to set
+     * @return the role
      */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Gets the project manager associated with this user.
-     * This allows access to the user's projects.
-     *
-     * @return the ProjectManager
-     */
-    public ProjectManager getProjectManager() {
-        return this.projectManager;
+    public String getRole() {
+        return this.role;
     }
 }

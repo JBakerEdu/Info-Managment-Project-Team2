@@ -1,7 +1,5 @@
 package edu.westga.dsdm.project;
 
-import edu.westga.dsdm.project.util.PopulateSampleData;
-
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -30,7 +28,6 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		PopulateSampleData.populateSampleData();
 		Parent parent = FXMLLoader.load(getClass().getResource(Main.GUI_RESOURCE));
 		Scene scene = new Scene(parent);
 		primaryStage.setTitle(WINDOW_TITLE);

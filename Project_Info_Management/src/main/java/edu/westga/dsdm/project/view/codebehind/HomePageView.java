@@ -170,7 +170,7 @@ public class HomePageView {
 	@FXML
 	void initialize() {
 		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getUsername();
+			String username = Session.getInstance().getCurrentUser().getFirstName();
 			this.accountHeader.setText(username);
 			this.login.setDisable(true);
 			this.login.setVisible(false);
@@ -190,42 +190,42 @@ public class HomePageView {
 			this.clearText(descriptions[i]);
 		}
 
-		List<User> users = AccountManager.getAllAccounts();
-		if (users == null || users.isEmpty()) {
-			return;
-		}
-		Collections.shuffle(users);
-		int filled = 0;
-		int attempts = 0;
-		while (filled < 4 && attempts < users.size()) {
-			User user = users.get(attempts++);
-			Project validProject = this.getRandomProjectFromUser(user);
-			if (validProject != null) {
-				this.setProjectSlotVisible(panes[filled], true);
-				editors[filled].setText(this.getSafeDate(validProject));
-				descriptions[filled].setText(this.getSafeDescription(validProject));
-				this.displayedProjects[filled] = validProject;
-				filled++;
-			}
-		}
+//		List<User> users = AccountManager.getAllAccounts();
+//		if (users == null || users.isEmpty()) {
+//			return;
+//		}
+//		Collections.shuffle(users);
+//		int filled = 0;
+//		int attempts = 0;
+//		while (filled < 4 && attempts < users.size()) {
+//			User user = users.get(attempts++);
+//			Project validProject = this.getRandomProjectFromUser(user);
+//			if (validProject != null) {
+//				this.setProjectSlotVisible(panes[filled], true);
+//				editors[filled].setText(this.getSafeDate(validProject));
+//				descriptions[filled].setText(this.getSafeDescription(validProject));
+//				this.displayedProjects[filled] = validProject;
+//				filled++;
+//			}
+//		}
 	}
 	
 	private Project getRandomProjectFromUser(User user) {
-		if (user == null || user.getProjectManager() == null) {
+		if (user == null) {
 			return null;
 		}
 
-		List<Project> projects = user.getProjectManager().getProjects();
-		if (projects == null || projects.isEmpty()) {
-			return null;
-		}
-
-		Collections.shuffle(projects);
-		for (Project project : projects) {
-			if (project != null) {
-				return project;
-			}
-		}
+//		List<Project> projects = user.getProjectManager().getProjects();
+//		if (projects == null || projects.isEmpty()) {
+//			return null;
+//		}
+//
+//		Collections.shuffle(projects);
+//		for (Project project : projects) {
+//			if (project != null) {
+//				return project;
+//			}
+//		}
 		return null;
 	}
 

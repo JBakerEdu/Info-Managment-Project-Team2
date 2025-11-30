@@ -127,7 +127,7 @@ public class EventPageView {
     @FXML
     void handleEditButtonClick(ActionEvent event) {
 		String selectedProjectName = this.projectTitleLabel.getText();
-		this.currentProject = Session.getInstance().getCurrentUser().getProjectManager().getProjectByName(selectedProjectName);
+		//this.currentProject = Session.getInstance().getCurrentUser().getProjectManager().getProjectByName(selectedProjectName);
 	
 		this.codeTextAreaPane.setVisible(false);
 		this.folderListView.setVisible(true);
@@ -356,11 +356,11 @@ public class EventPageView {
 	
 	private void initUserNames() {
 		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getUsername();
+			String username = Session.getInstance().getCurrentUser().getFirstName();
 			this.accountHeader.setText(username);
 			if (AccountContext.getInstance().hasUserToView()) {
 				User viewed = AccountContext.getInstance().getUserToView();
-				this.userName.setText(viewed.getUsername());
+				this.userName.setText(viewed.getEmail());
 			} else {
 				this.userName.setText("Error: Select Another User");
 			}
@@ -410,22 +410,22 @@ public class EventPageView {
 			return;
 		}
 
-		User owner = null;
-		for (User user : AccountManager.getAllAccounts()) {
-			if (user.getProjectManager().getProjects().contains(selectedProject)) {
-				owner = user;
-				break;
-			}
-		}
-
-		if (owner != null) {
-			this.userName.setText(owner.getUsername());
-			this.isOwner = Session.getInstance().isLoggedIn() && Session.getInstance().getCurrentUser().getUsername().equals(owner.getUsername());
-			this.editButton.setVisible(this.isOwner);
-		} else {
-			this.userName.setText("Unknown Owner");
-			this.editButton.setVisible(false);
-		}
+//		User owner = null;
+//		for (User user : AccountManager.getAllAccounts()) {
+//			if (user.getProjectManager().getProjects().contains(selectedProject)) {
+//				owner = user;
+//				break;
+//			}
+//		}
+//
+//		if (owner != null) {
+//			this.userName.setText(owner.getFirstName());
+//			this.isOwner = Session.getInstance().isLoggedIn() && Session.getInstance().getCurrentUser().getEmail().equals(owner.getEmail());
+//			this.editButton.setVisible(this.isOwner);
+//		} else {
+//			this.userName.setText("Unknown Owner");
+//			this.editButton.setVisible(false);
+//		}
 	}
 
 	private void bindPropertiesAndListners() {
