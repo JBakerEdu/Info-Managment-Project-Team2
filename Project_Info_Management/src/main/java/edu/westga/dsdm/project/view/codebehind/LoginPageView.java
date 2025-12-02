@@ -54,8 +54,7 @@ public class LoginPageView {
 		String email = this.emailTextFeild.getText();
 		String password = this.passwordTextFeild.getText();
 		try {
-			User user = AccountManager.findUserByEmail(email);
-			user = AccountManager.validateLogin(email, password);
+			User user = AccountManager.validateLogin(email, password);
 
 			if (user == null) {
 				User exists = AccountManager.findUserByEmail(email);

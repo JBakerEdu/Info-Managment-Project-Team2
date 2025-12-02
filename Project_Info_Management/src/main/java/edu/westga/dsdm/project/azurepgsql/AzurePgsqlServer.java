@@ -23,15 +23,24 @@ public class AzurePgsqlServer {
     private Connection connection;
     private Properties properties;
 
+    /**
+     * Private constructor — initializes database configuration and opens the initial connection.
+     *
+     * @throws Exception if properties cannot be loaded or the database connection cannot be opened
+     */
     private AzurePgsqlServer() throws Exception {
         loadProperties();
         openConnection();
     }
 
     /**
-     * Singleton accessor — ensures 1 DB connection manager.
+     * Returns the singleton instance of the database server manager.
      *
-     * @return the server instance
+     * Uses double-checked locking to ensure thread safety while minimizing synchronization
+     * overhead.
+     *
+     * @return the singleton {@code AzurePgsqlServer} instance
+     * @throws Exception if initialization fails (e.g., properties or connection error)
      */
     public static AzurePgsqlServer getInstance() throws Exception {
         if (instance == null) {
@@ -45,7 +54,15 @@ public class AzurePgsqlServer {
     }
 
     /**
-     * Loads database configuration from src/main/resources/application.properties.
+     * Loads database configuration from {@code application.properties} in the classpath.
+     *
+     * Required properties include (minimum):
+     *
+     *   {@code url} — full JDBC connection string
+     *   {@code user}
+     *   {@code password}
+     *
+     * @throws Exception if the properties file is missing or cannot be parsed
      */
     private void loadProperties() throws Exception {
         log.info("Loading application.properties...");
@@ -62,7 +79,12 @@ public class AzurePgsqlServer {
     }
 
     /**
-     * Opens the JDBC connection.
+     * Opens the JDBC connection to the configured Azure PostgreSQL instance.
+     *
+     * This method is invoked automatically during initialization, and again if a
+     * connection is found closed.
+     *
+     @throws SQLException if the JDBC driver fails to authenticate or connect
      */
     private void openConnection() throws SQLException {
         log.info("Connecting to Azure PostgreSQL...");
@@ -71,10 +93,11 @@ public class AzurePgsqlServer {
     }
 
     /**
-     * Returns the active database connection.
+     * Returns the active database connection to the configured Azure PostgreSQL instance.
      * Reconnects if the connection has closed.
      *
      * @return JDBC connection
+     * @throws SQLException if reconnection attempt fails
      */
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
@@ -85,7 +108,10 @@ public class AzurePgsqlServer {
     }
 
     /**
-     * Gracefully closes DB connection.
+     * Closes the active database connection if it is currently open.
+     *
+     * This method should be invoked during controlled shutdowns, such as application exit
+     * or cleanup routines.
      */
     public void close() {
         try {

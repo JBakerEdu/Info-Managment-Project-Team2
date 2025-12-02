@@ -3,12 +3,23 @@ import edu.westga.dsdm.project.model.User;
 import java.sql.*;
 import java.util.logging.Logger;
 
+/**
+ * Utility class providing database operations for User objects.
+ *
+ * This class interacts with PostgreSQL through stored procedures and
+ * prepared queries. All methods obtain a connection through
+ * {@link AzurePgsqlServer#getInstance()} and either modify or retrieve
+ * user data in the database
+ */
 public class DBUserOps {
 
     private static final Logger log = Logger.getLogger(DBUserOps.class.getName());
 
     /**
      * Create User using stored procedure create_user.
+     * The procedure inserts a user record based on the supplied fields.
+     * After execution, this method performs a lookup by email and returns
+     * the newly created user.
      *
      * @param first first name
      * @param last last name
@@ -36,6 +47,9 @@ public class DBUserOps {
 
     /**
      * Deletes a user using stored procedure delete_user.
+     *
+     * @param userId the ID of the user to delete
+     * @throws Exception if a database connection error occurs
      */
     public static void deleteUser(int userId) throws Exception {
         log.info("Calling stored procedure: delete_user");
@@ -49,6 +63,10 @@ public class DBUserOps {
 
     /**
      * Updates a user's role using change_user_role procedure.
+     *
+     * @param userId the ID of the user whose role should be updated
+     * @param newRole the new role to assign to the user
+     * @throws Exception if a database connection error occurs
      */
     public static void changeUserRole(int userId, String newRole) throws Exception {
         log.info("Calling stored procedure: change_user_role");
@@ -64,8 +82,11 @@ public class DBUserOps {
 
     /**
      * Uses verify_user_credentials function.
-     *
-     * @return true if email+hash match
+     * @param email the email address to check
+     * @param passwordHash the hashed password to verify
+     * @return {@code true} if the credentials match a user record,
+     *         {@code false} otherwise
+     * @throws Exception if a database connection error occurs
      */
     public static boolean verifyCredentials(String email, String passwordHash) throws Exception {
         log.info("Calling stored function: verify_user_credentials");
@@ -85,12 +106,15 @@ public class DBUserOps {
     }
 
     /**
-     * Helper to fetch user info using SELECT.
+     * Fetches user info by email without exposing the password hash.
+     *
+     * @param email the email to search for
+     * @return user if the user (w/o passhash) exists, null otherwise
+     * @throws Exception if a database connection error occurs
      */
     public static User findByEmail(String email) throws Exception {
-        log.info("Querying user by email");
-        String sql = "SELECT user_id, first_name, last_name, email, password_hash, role_at_event " +
-                "FROM users WHERE email = ? LIMIT 1";
+        log.info("Checking if user exists by email");
+        String sql = "SELECT * FROM find_user_by_email(?)";
         Connection conn = AzurePgsqlServer.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -106,6 +130,10 @@ public class DBUserOps {
 
     /**
      * Utility mapper — converts a ResultSet row to your User class
+     *
+     * @param rs the ResultSet positioned on the desired row
+     * @return a fully populated {@link User} object
+     * @throws SQLException if any column access fails
      */
     private static User mapUser(ResultSet rs) throws SQLException {
         return new User(
