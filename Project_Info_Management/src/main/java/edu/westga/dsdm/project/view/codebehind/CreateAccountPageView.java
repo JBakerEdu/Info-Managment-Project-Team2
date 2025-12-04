@@ -11,13 +11,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
  * CodeBehind To Handle Processing for the Create Account Page
  *
- * @author	Jacob Baker
+ * @author	Kate Anglin
  * @version Spring 2025
  */
 public class CreateAccountPageView {
@@ -41,7 +42,13 @@ public class CreateAccountPageView {
     private Label errorNotValidEmail;
 
     @FXML
-    private Label errorNotValidUsername;
+    private Label errorNotValidFirstName;
+
+	@FXML
+	private Label errorNotValidLastName;
+
+	@FXML
+	private Label errorNotValidRole;
 	
 	@FXML
     private Label accountHeader;
@@ -50,7 +57,13 @@ public class CreateAccountPageView {
     private PasswordField passwordTextFeild;
 
     @FXML
-    private TextField userNameTextFeild;
+    private TextField firstNameTextFeild;
+
+	@FXML
+	private TextField lastNameTextFeild;
+
+	@FXML
+	private ComboBox<String> roleComboBox;
 	
 	@FXML
 	private Button createAccountSubmitButton;
@@ -63,18 +76,25 @@ public class CreateAccountPageView {
 			return;
 		}
 
-		String username = this.userNameTextFeild.getText();
+		String firstname = this.firstNameTextFeild.getText();
+		String lastname = this.lastNameTextFeild.getText();
 		String password = this.passwordTextFeild.getText();
 		String email = this.emailTextFeild.getText();
+		String role = this.roleComboBox.getValue().toLowerCase();
 
-		boolean success = AccountManager.createAccount(username, password, email);
-		if (success) {
-			User newUser = AccountManager.validateLogin(username, password);
-			Session.getInstance().login(newUser);
-			AccountContext.getInstance().setUserToView(newUser);
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
-		} else {
-			this.errorNotValidUsername.setVisible(true);
+		try {
+			User user = AccountManager.createAccount(firstname, lastname, email, password, role);
+			if (user != null) {
+				User newUser = AccountManager.validateLogin(email, password);
+				Session.getInstance().login(newUser);
+				AccountContext.getInstance().setUserToView(newUser);
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			} else {
+				this.errorNotValidEmail.setVisible(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.showAlert("Error", "An unexpected error occurred: " + e.getMessage());
 		}
 	}
 
@@ -87,10 +107,22 @@ public class CreateAccountPageView {
 	private boolean validateCreateAccountInputs() {
 		boolean isValid = true;
 
-		String username = this.userNameTextFeild.getText();
+		String firstname = this.firstNameTextFeild.getText();
+		String lastname = this.lastNameTextFeild.getText();
 		String password = this.passwordTextFeild.getText();
 		String confirmPassword = this.confirmPasswordTextFeild.getText();
 		String email = this.emailTextFeild.getText();
+		String role = this.roleComboBox.getValue().toLowerCase();
+
+		if (firstname.isEmpty()) {
+			this.errorNotValidFirstName.setVisible(true);
+			isValid = false;
+		}
+
+		if (lastname.isEmpty()) {
+			this.errorNotValidLastName.setVisible(true);
+			isValid = false;
+		}
 
 		if (!password.equals(confirmPassword)) {
 			this.errorNotConfirmedPassword.setVisible(true);
@@ -102,16 +134,20 @@ public class CreateAccountPageView {
 			isValid = false;
 		}
 
-		if (AccountManager.findUserByUsername(username) != null) {
-			this.errorNotValidUsername.setVisible(true);
+		if (role.isEmpty()) {
+			this.errorNotValidRole.setVisible(true);
 			isValid = false;
 		}
 
-		if (AccountManager.findUserByEmail(email) != null) {
-			this.errorNotValidEmail.setVisible(true);
-			isValid = false;
+		try {
+			if (AccountManager.findUserByEmail(email) != null) {
+				this.errorNotValidEmail.setVisible(true);
+				isValid = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.showAlert("Error", "An unexpected error occurred: " + e.getMessage());
 		}
-		
 		return isValid;
 	}
 
@@ -147,18 +183,24 @@ public class CreateAccountPageView {
 	@FXML
 	void initialize() {
 		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getUsername();
-			this.accountHeader.setText(username);
+			String firstName = Session.getInstance().getCurrentUser().getFirstName();
+			this.accountHeader.setText(firstName);
 		} else {
 			this.accountHeader.setText("Account");
 		}
 		this.errorNotConfirmedPassword.setVisible(false);
 		this.errorNotCorrectPassword.setVisible(false);
 		this.errorNotValidEmail.setVisible(false);
-		this.errorNotValidUsername.setVisible(false);
+		this.errorNotValidFirstName.setVisible(false);
+		this.errorNotValidLastName.setVisible(false);
+		this.errorNotValidRole.setVisible(false);
 		this.createAccountSubmitButton.setDisable(true);
 		
-		this.userNameTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
+		this.firstNameTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
+			this.checkFieldsAndToggleButton();
+		});
+
+		this.lastNameTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
 			this.checkFieldsAndToggleButton();
 		});
 
@@ -173,13 +215,20 @@ public class CreateAccountPageView {
 		this.emailTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
 			this.checkFieldsAndToggleButton();
 		});
+
+		this.roleComboBox.getItems().addAll("Organizer", "Volunteer", "Judge", "Teacher", "Student");
+		this.roleComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+			this.checkFieldsAndToggleButton();
+		});
 	}
 
 	private void checkFieldsAndToggleButton() {
-		boolean allFieldsFilled = !this.userNameTextFeild.getText().trim().isEmpty()
-			&& !this.passwordTextFeild.getText().trim().isEmpty()
-			&& !this.confirmPasswordTextFeild.getText().trim().isEmpty()
-			&& !this.emailTextFeild.getText().trim().isEmpty();
+		boolean allFieldsFilled = !this.firstNameTextFeild.getText().trim().isEmpty()
+				&& !this.lastNameTextFeild.getText().trim().isEmpty()
+				&& !this.passwordTextFeild.getText().trim().isEmpty()
+				&& !this.confirmPasswordTextFeild.getText().trim().isEmpty()
+				&& !this.emailTextFeild.getText().trim().isEmpty()
+				&& this.roleComboBox.getValue() != null;
 		this.createAccountSubmitButton.setDisable(!allFieldsFilled);
 	}
 
@@ -187,6 +236,15 @@ public class CreateAccountPageView {
         this.errorNotConfirmedPassword.setVisible(false);
         this.errorNotCorrectPassword.setVisible(false);
         this.errorNotValidEmail.setVisible(false);
-        this.errorNotValidUsername.setVisible(false);
+        this.errorNotValidFirstName.setVisible(false);
+		this.errorNotValidLastName.setVisible(false);
     }
+
+	private void showAlert(String title, String message) {
+		javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
 }

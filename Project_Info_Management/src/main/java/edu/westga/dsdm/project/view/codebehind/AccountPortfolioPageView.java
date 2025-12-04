@@ -4,6 +4,7 @@ import edu.westga.dsdm.project.model.Session;
 import edu.westga.dsdm.project.model.User;
 import edu.westga.dsdm.project.model.AccountContext;
 import edu.westga.dsdm.project.model.Project;
+import edu.westga.dsdm.project.model.ProjectManager;
 import edu.westga.dsdm.project.model.ProjectContext;
 
 import java.util.List;
@@ -134,8 +135,6 @@ public class AccountPortfolioPageView {
 		String defaultDescription = "Project Description Here";
 		String defaultLink = "";
 
-		Session.getInstance().getCurrentUser().getProjectManager().addProject(defaultName, defaultDescription, defaultLink, null);
-
 		this.loadUserProjects(Session.getInstance().getCurrentUser());
     }
 
@@ -158,7 +157,7 @@ public class AccountPortfolioPageView {
 			boolean confirmed = this.confirmDeletion();
 			if (confirmed) {
 				Project projectToDelete = this.currentProjects.get(projectIndex);
-				Session.getInstance().getCurrentUser().getProjectManager().removeProject(projectToDelete);
+				//Session.getInstance().getCurrentUser().getProjectManager().removeProject(projectToDelete);
 				this.loadUserProjects(Session.getInstance().getCurrentUser());
 				this.showAlert("Deleted", "The project has been deleted successfully.");
 			}
@@ -189,14 +188,13 @@ public class AccountPortfolioPageView {
 	
 	@FXML
     void handleSaveButtonClick(ActionEvent event) {
-		Session.getInstance().getCurrentUser().setDescription(this.userDescription.getText());
+		//Session.getInstance().getCurrentUser().setDescription(this.userDescription.getText());
 		this.switichEditMode(false);
 		
     }
 	
 	@FXML
     void handleCancelButtonClick(ActionEvent event) {
-		this.userDescription.setText(Session.getInstance().getCurrentUser().getDescription());
 		this.switichEditMode(false);
     }
 	
@@ -308,13 +306,12 @@ public class AccountPortfolioPageView {
 
 	private void initUserNames() {
 		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getUsername();
-			this.accountHeader.setText(username);
+			String firstName = Session.getInstance().getCurrentUser().getFirstName();
+			this.accountHeader.setText(firstName);
 
 			if (AccountContext.getInstance().hasUserToView()) {
 				User viewed = AccountContext.getInstance().getUserToView();
-				this.userName.setText(viewed.getUsername());
-				this.userDescription.setText(viewed.getDescription());
+				this.userName.setText(viewed.getFirstName());
 				this.loadUserProjects(viewed);
 			} else {
 				this.userName.setText("Error: Select Another User");
@@ -326,7 +323,7 @@ public class AccountPortfolioPageView {
 	}
 
 	private void loadUserProjects(User user) {
-		this.currentProjects = user.getProjectManager().getProjects();
+		this.currentProjects = new ProjectManager().getProjects();
 		this.currentPage = 0;
 		this.updateProjectDisplay();
 	}

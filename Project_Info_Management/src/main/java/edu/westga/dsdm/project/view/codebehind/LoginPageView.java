@@ -17,8 +17,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * CodeBehind To Handle Processing for the Login Page
  *
- * @author	Jacob Baker
- * @version Spring 2025
+ * @author	Kate Anglin
+ * @version Fall 2025
  */
 public class LoginPageView {
 
@@ -32,7 +32,7 @@ public class LoginPageView {
     private Label errorNotCorrectPassword;
 
     @FXML
-    private Label errorNotValidUsername;
+    private Label errorNotValidEmail;
 	
 	@FXML
 	private Button loginSubmitButton;
@@ -41,7 +41,7 @@ public class LoginPageView {
     private PasswordField passwordTextFeild;
 
     @FXML
-    private TextField userNameTextFeild;
+    private TextField emailTextFeild;
 
     @FXML
     void handleHomeClick(MouseEvent event) {
@@ -51,21 +51,28 @@ public class LoginPageView {
     @FXML
 	void handleLoginButtonClick(ActionEvent event) {
 		this.hideAllErrors();
-		String enteredValue = this.userNameTextFeild.getText();
+		String email = this.emailTextFeild.getText();
 		String password = this.passwordTextFeild.getText();
-		User user = AccountManager.findUserByUsernameOrEmail(enteredValue);
-		if (user == null) {
-			this.errorNotValidUsername.setVisible(true);
-			return;
-		}
+		try {
+			User user = AccountManager.validateLogin(email, password);
 
-		if (!user.getPassword().equals(password)) {
-			this.errorNotCorrectPassword.setVisible(true);
-			return;
+			if (user == null) {
+				User exists = AccountManager.findUserByEmail(email);
+				if (exists == null) {
+					this.errorNotValidEmail.setVisible(true);
+				} else {
+					this.errorNotCorrectPassword.setVisible(true);
+				}
+				return;
+			}
+			Session.getInstance().login(user);
+			AccountContext.getInstance().setUserToView(user);
+			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			this.errorNotValidEmail.setText("Server error — try again.");
+			this.errorNotValidEmail.setVisible(true);
 		}
-		Session.getInstance().login(user);
-		AccountContext.getInstance().setUserToView(user);
-		GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
 	}
 
     @FXML
@@ -95,15 +102,15 @@ public class LoginPageView {
 	@FXML
 	void initialize() {
 		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getUsername();
-			this.accountHeader.setText(username);
+			String email = Session.getInstance().getCurrentUser().getEmail();
+			this.accountHeader.setText(email);
 		} else {
 			this.accountHeader.setText("Account");
 		}
 		this.hideAllErrors();
 		this.loginSubmitButton.setDisable(true);
 
-		this.userNameTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
+		this.emailTextFeild.textProperty().addListener((observable, oldValue, newValue) -> {
 			this.checkFieldsAndToggleLoginButton();
 		});
 
@@ -114,11 +121,11 @@ public class LoginPageView {
 	
 	private void hideAllErrors() {
         this.errorNotCorrectPassword.setVisible(false);
-        this.errorNotValidUsername.setVisible(false);
+        this.errorNotValidEmail.setVisible(false);
     }
 	
 	private void checkFieldsAndToggleLoginButton() {
-		boolean fieldsFilled = !this.userNameTextFeild.getText().trim().isEmpty() && !this.passwordTextFeild.getText().trim().isEmpty();
+		boolean fieldsFilled = !this.emailTextFeild.getText().trim().isEmpty() && !this.passwordTextFeild.getText().trim().isEmpty();
 		this.loginSubmitButton.setDisable(!fieldsFilled);
 	}
 }
