@@ -11,7 +11,9 @@ public enum Views {
 	ACCOUNT("/edu/westga/dsdm/project/view/codebehind/AccountPortfolioPageView.fxml"),
 	PROJECTS("/edu/westga/dsdm/project/view/codebehind/EventPageView.fxml"),
 	LOGIN("/edu/westga/dsdm/project/view/codebehind/LoginPageView.fxml"),
-	CREATE_ACCOUNT("/edu/westga/dsdm/project/view/codebehind/CreateAccountPageView.fxml");
+	CREATE_ACCOUNT("/edu/westga/dsdm/project/view/codebehind/CreateAccountPageView.fxml"),
+	TEACHER_PROFILE("/edu/westga/dsdm/project/view/codebehind/AccountTeacherProfilePageView.fxml"),
+	STUDENT_PROFILE("/edu/westga/dsdm/project/view/codebehind/AccountStudentProfilePageView.fxml");
 	
 	private String fileLocation;
 	

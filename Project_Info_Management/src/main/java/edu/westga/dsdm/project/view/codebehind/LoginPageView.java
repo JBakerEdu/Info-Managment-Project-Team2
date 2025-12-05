@@ -67,7 +67,14 @@ public class LoginPageView {
 			}
 			Session.getInstance().login(user);
 			AccountContext.getInstance().setUserToView(user);
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+
+			if (Session.getInstance().getCurrentUser().getRole().equals("Teacher")) {
+				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+			} else if (Session.getInstance().getCurrentUser().getRole().equals("Student")) {
+				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
+			}
+
+			//GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			this.errorNotValidEmail.setText("Server error — try again.");
@@ -83,7 +90,12 @@ public class LoginPageView {
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
 		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			//GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			if (Session.getInstance().getCurrentUser().getRole().equals("Teacher")) {
+				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+			} else if (Session.getInstance().getCurrentUser().getRole().equals("Student")) {
+				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
+			}
 		} else {
 			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
 		}

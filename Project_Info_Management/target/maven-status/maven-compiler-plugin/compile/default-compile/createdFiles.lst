@@ -4,6 +4,7 @@ edu\westga\dsdm\project\model\Session.class
 edu\westga\dsdm\project\view\codebehind\HomePageView.class
 edu\westga\dsdm\project\view\codebehind\Views.class
 edu\westga\dsdm\project\model\ProjectContext.class
+edu\westga\dsdm\project\view\codebehind\AccountStudentProfilePageView.class
 edu\westga\dsdm\project\view\codebehind\GuiHelper.class
 edu\westga\dsdm\project\view\codebehind\EventPageView.class
 edu\westga\dsdm\project\model\AccountContext.class
@@ -17,3 +18,4 @@ edu\westga\dsdm\project\Main.class
 edu\westga\dsdm\project\model\Project.class
 edu\westga\dsdm\project\view\codebehind\AccountPortfolioPageView.class
 edu\westga\dsdm\project\util\EncryptionService.class
+edu\westga\dsdm\project\view\codebehind\AccountTeacherProfilePageView.class
