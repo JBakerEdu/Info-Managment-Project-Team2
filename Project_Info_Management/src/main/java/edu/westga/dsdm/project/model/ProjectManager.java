@@ -8,7 +8,7 @@ import java.util.List;
  * Manages a collection of projects for a specific user.
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public class ProjectManager {
     private List<Project> projects;

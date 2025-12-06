@@ -163,8 +163,16 @@ public class CreateAccountPageView {
 
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
-		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+		User currentUser = Session.getInstance().getCurrentUser();
+
+		if (currentUser != null) {
+			String role = currentUser.getRole();
+
+			if ("organizer".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else {
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			}
 		} else {
 			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
 		}

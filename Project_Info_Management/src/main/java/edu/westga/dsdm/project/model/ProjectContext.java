@@ -4,7 +4,7 @@ package edu.westga.dsdm.project.model;
  * Singleton class used to store and manage the currently selected project.
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public final class ProjectContext {
     private static ProjectContext instance = null;
