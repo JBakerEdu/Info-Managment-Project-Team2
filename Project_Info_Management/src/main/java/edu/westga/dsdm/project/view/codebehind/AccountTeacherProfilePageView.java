@@ -10,6 +10,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import edu.westga.dsdm.project.model.Session;
+import edu.westga.dsdm.project.model.User;
+import edu.westga.dsdm.project.model.AccountContext;
+import edu.westga.dsdm.project.model.Project;
+import edu.westga.dsdm.project.model.ProjectManager;
+import edu.westga.dsdm.project.model.ProjectContext;
+
 public class AccountTeacherProfilePageView {
 
     @FXML
@@ -38,6 +45,9 @@ public class AccountTeacherProfilePageView {
 
     @FXML
     private Button btnRegisterStudent;
+
+    @FXML
+    private Button logout;
 
     @FXML
     private Label labelEmail;
@@ -76,21 +86,35 @@ public class AccountTeacherProfilePageView {
 
     @FXML
     void initialize() {
-        assert accountHeader != null : "fx:id=\"accountHeader\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert anchorPane != null : "fx:id=\"anchorPane\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert btnCreateGroup != null : "fx:id=\"btnCreateGroup\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert btnEditGroup != null : "fx:id=\"btnEditGroup\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert btnEditStudent != null : "fx:id=\"btnEditStudent\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert btnMakeViewComments != null : "fx:id=\"btnMakeViewComments\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert btnRegisterStudent != null : "fx:id=\"btnRegisterStudent\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert labelEmail != null : "fx:id=\"labelEmail\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert labelFullName != null : "fx:id=\"labelFullName\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert labelRole != null : "fx:id=\"labelRole\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert profileImage != null : "fx:id=\"profileImage\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-        assert profilePicture != null : "fx:id=\"profilePicture\" was not injected: check your FXML file 'AccountTeacherProfilePageView.fxml'.";
-
+        this.initUserNames();
     }
-    
+
+    private void initUserNames() {
+        if (Session.getInstance().getCurrentUser() != null) {
+            String firstName = Session.getInstance().getCurrentUser().getFirstName();
+            this.accountHeader.setText(firstName);
+
+            if (AccountContext.getInstance().hasUserToView()) {
+                User viewed = AccountContext.getInstance().getUserToView();
+                this.labelFullName.setText(viewed.getFirstName() + " " + viewed.getLastName());
+                this.labelEmail.setText(viewed.getEmail());
+                this.labelRole.setText(viewed.getRole());
+                //this.loadUserProjects(viewed);
+            } else {
+                this.labelFullName.setText("Error: Select Another User");
+            }
+        } else {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+            this.accountHeader.setText("Account");
+        }
+    }
+
+    @FXML
+    void handleLogoutButtonClick(ActionEvent event) {
+        Session.getInstance().logout();
+        GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
+    }
+
     void registerStudent(MouseEvent event) {
     	//TODO: Loads the Student Registration page.
     }

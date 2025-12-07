@@ -68,9 +68,9 @@ public class LoginPageView {
 			Session.getInstance().login(user);
 			AccountContext.getInstance().setUserToView(user);
 
-			if (Session.getInstance().getCurrentUser().getRole().equals("Teacher")) {
+			if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Teacher")) {
 				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
-			} else if (Session.getInstance().getCurrentUser().getRole().equals("Student")) {
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Student")) {
 				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
 			}
 
@@ -91,9 +91,9 @@ public class LoginPageView {
     void handlePersonalAccountClick(MouseEvent event) {
 		if (Session.getInstance().getCurrentUser() != null) {
 			//GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
-			if (Session.getInstance().getCurrentUser().getRole().equals("Teacher")) {
+			if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Teacher")) {
 				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
-			} else if (Session.getInstance().getCurrentUser().getRole().equals("Student")) {
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Student")) {
 				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
 			}
 		} else {

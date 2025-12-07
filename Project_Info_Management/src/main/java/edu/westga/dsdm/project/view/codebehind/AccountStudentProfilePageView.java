@@ -11,6 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import edu.westga.dsdm.project.model.Session;
+import edu.westga.dsdm.project.model.User;
+import edu.westga.dsdm.project.model.AccountContext;
+import edu.westga.dsdm.project.model.Project;
+import edu.westga.dsdm.project.model.ProjectManager;
+import edu.westga.dsdm.project.model.ProjectContext;
+
 public class AccountStudentProfilePageView {
 
     @FXML
@@ -27,6 +34,9 @@ public class AccountStudentProfilePageView {
 
     @FXML
     private Button btnViewProject;
+
+    @FXML
+    private Button logout;
 
     @FXML
     private Label labelEmail;
@@ -68,20 +78,37 @@ public class AccountStudentProfilePageView {
 
     @FXML
     void initialize() {
-        assert accountHeader != null : "fx:id=\"accountHeader\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert anchorPane != null : "fx:id=\"anchorPane\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert btnViewProject != null : "fx:id=\"btnViewProject\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert labelEmail != null : "fx:id=\"labelEmail\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert labelFullName != null : "fx:id=\"labelFullName\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert labelRole != null : "fx:id=\"labelRole\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert listStudentProjects != null : "fx:id=\"listStudentProjects\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert profileImage != null : "fx:id=\"profileImage\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        assert profilePicture != null : "fx:id=\"profilePicture\" was not injected: check your FXML file 'AccountStudentProfilePageView.fxml'.";
-        
-        this.loadStudentProjects();
+        this.initUserNames();
+        //this.loadStudentProjects();
     }
-    
-    void loadStudentProjects() {
-    	//TODO: Load student projects they may be associated with. No need to implement the view button.
+
+    private void initUserNames() {
+        if (Session.getInstance().getCurrentUser() != null) {
+            String firstName = Session.getInstance().getCurrentUser().getFirstName();
+            this.accountHeader.setText(firstName);
+
+            if (AccountContext.getInstance().hasUserToView()) {
+                User viewed = AccountContext.getInstance().getUserToView();
+                this.labelFullName.setText(viewed.getFirstName() + " " + viewed.getLastName());
+                this.labelEmail.setText(viewed.getEmail());
+                this.labelRole.setText(viewed.getRole());
+                //this.loadUserProjects(viewed);
+            } else {
+                this.labelFullName.setText("Error: Select Another User");
+            }
+        } else {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+            this.accountHeader.setText("Account");
+        }
+    }
+
+//    void loadStudentProjects() {
+//    	//TODO: Load student projects they may be associated with. No need to implement the view button.
+//    }
+
+    @FXML
+    void handleLogoutButtonClick(ActionEvent event) {
+        Session.getInstance().logout();
+        GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
     }
 }
