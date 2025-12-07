@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  * Helper class for methods that all the codebehind classes will need
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public class GuiHelper {
 	

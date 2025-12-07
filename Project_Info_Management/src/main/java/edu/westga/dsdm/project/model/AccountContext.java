@@ -4,7 +4,7 @@ package edu.westga.dsdm.project.model;
  * Singleton class used to store and manage the currently viewed user account.
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public final class AccountContext {
     private static AccountContext instance = null;

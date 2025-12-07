@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * CodeBehind To Handle Processing for the Create Account Page
  *
- * @author	Kate Anglin
+ * @author	Kate Anglin and Jacob
  * @version Spring 2025
  */
 public class CreateAccountPageView {

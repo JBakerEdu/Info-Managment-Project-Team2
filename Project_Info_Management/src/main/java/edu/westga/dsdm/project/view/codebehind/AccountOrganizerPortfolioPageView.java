@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import edu.westga.dsdm.project.model.AccountContext;
 import edu.westga.dsdm.project.model.Event;
 import edu.westga.dsdm.project.model.EventManager;
 import edu.westga.dsdm.project.model.Session;
 import edu.westga.dsdm.project.model.User;
-
+import edu.westga.dsdm.project.model.EventContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +34,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Controller for handling the organizer's event portfolio page.
+ * This page allows the organizer to view, add, delete, and navigate events.
+ * 
+ * @author Jacob Baker
+ * @version Fall 2025
+ */
 public class AccountOrganizerPortfolioPageView implements Initializable {
 
     @FXML private Label accountHeader;
@@ -46,18 +53,19 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
     @FXML private Button logout;
     @FXML private Button nextEventsButton;
     @FXML private ImageView profileImage;
-    @FXML private TextArea projectDescription1;
-    @FXML private TextArea projectDescription2;
-    @FXML private TextArea projectDescription3;
-    @FXML private TextField projectName1;
-    @FXML private TextField projectName2;
-    @FXML private TextField projectName3;
-    @FXML private Pane projectPane1;
-    @FXML private Pane projectPane2;
-    @FXML private Pane projectPane3;
-    @FXML private Button projectView1;
-    @FXML private Button projectView2;
-    @FXML private Button projectView3;
+	@FXML private ImageView searchImage;
+    @FXML private TextArea eventDescription1;
+    @FXML private TextArea eventDescription2;
+    @FXML private TextArea eventDescription3;
+    @FXML private TextField eventName1;
+    @FXML private TextField eventName2;
+    @FXML private TextField eventName3;
+    @FXML private Pane eventPane1;
+    @FXML private Pane eventPane2;
+    @FXML private Pane eventPane3;
+    @FXML private Button eventView1;
+    @FXML private Button eventView2;
+    @FXML private Button eventView3;
     @FXML private Label role;
     @FXML private Label userName;
 
@@ -65,6 +73,11 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
     private List<Event> events;
     private int eventsPage = 0;
 
+	/**
+     * Initializes the view by loading the user and event data.
+     * 
+     * This method is automatically called when the view is loaded.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.loadUser();
@@ -72,6 +85,10 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         this.updateUI();
     }
 
+	/**
+     * Loads the current user (organizer) details from the session or context.
+     * If no user is found, redirects to the login page.
+     */
     private void loadUser() {
         AccountContext ctx = AccountContext.getInstance();
 
@@ -90,6 +107,10 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         this.accountHeader.setText(this.organizerUser.getFirstName());
     }
 
+	/**
+     * Loads the events associated with the current organizer.
+     * If an error occurs while fetching events, it displays an error message.
+     */
     private void loadEvents() {
         try {
             this.events = EventManager.getEventsForOrganizer(this.organizerUser.getUserId());
@@ -98,28 +119,44 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         }
     }
 
+	/**
+     * Updates the UI with the events. 
+     * This includes populating the UI with event titles and descriptions.
+     * It also handles pagination for multiple pages of events.
+     */
     private void updateUI() {
         clearPanes();
 
         if (this.events == null || this.events.isEmpty()) {
-            this.projectName1.setText("No events found.");
-            this.projectDescription1.setText("");
+            this.eventName1.setText("No events found.");
+            this.eventDescription1.setText("");
             return;
         }
 
         int start = eventsPage * 3;
 
-        setEventIntoPane(0, projectPane1, projectName1, projectDescription1);
-        setEventIntoPane(1, projectPane2, projectName2, projectDescription2);
-        setEventIntoPane(2, projectPane3, projectName3, projectDescription3);
+        setEventIntoPane(0, eventPane1, eventName1, eventDescription1);
+        setEventIntoPane(1, eventPane2, eventName2, eventDescription2);
+        setEventIntoPane(2, eventPane3, eventName3, eventDescription3);
     }
 
+	/**
+     * Clears the event panes by hiding them.
+     */
     private void clearPanes() {
-        projectPane1.setVisible(false);
-        projectPane2.setVisible(false);
-        projectPane3.setVisible(false);
+        eventPane1.setVisible(false);
+        eventPane2.setVisible(false);
+        eventPane3.setVisible(false);
     }
 
+	/**
+     * Populates the event details into a specific pane.
+     * 
+     * @param offset the index offset of the event
+     * @param pane the pane to display the event in
+     * @param nameField the TextField to display the event's title
+     * @param descField the TextArea to display the event's description
+     */
     private void setEventIntoPane(int offset, Pane pane, TextField nameField, TextArea descField) {
         int index = eventsPage * 3 + offset;
 
@@ -135,6 +172,11 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         descField.setText(e.getDescription() == null ? "" : e.getDescription());
     }
 
+	/**
+     * Handles the click event for adding a new event.
+     * 
+     * Displays a dialog to collect event details from the user and create a new event.
+     */
     @FXML
 	void handleAddEventsButtonClick(ActionEvent event) {
 		javafx.scene.control.Dialog<Event> dialog = new javafx.scene.control.Dialog<>();
@@ -237,6 +279,11 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
 		}
 	}
 
+	/**
+     * Handles the click event to delete an event.
+     * 
+     * Displays a confirmation dialog before deleting the event.
+     */
     @FXML
 	void handleDeleteEventsButtonClick(ActionEvent event) {
 
@@ -280,11 +327,20 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
 		}
 	}
 
+	/**
+     * Navigates the user back to the homepage.
+     * This method is triggered when the home button is clicked.
+     */
     @FXML
     void handleHomeClick(MouseEvent event) { 
 		GuiHelper.switchView(anchorPane, Views.HOMEPAGE);
 	}
 
+	/**
+     * Handles the "Previous Events" button click.
+     * This method decreases the events page counter (if not already on the first page) 
+     * and reloads the updated event list for the previous page.
+     */
     @FXML
     void handleLastEventsButtonClick(ActionEvent event) {
         if (eventsPage > 0) {
@@ -293,12 +349,21 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         }
     }
 
+	/**
+     * Logs the current user out and redirects them to the login page.
+     * This method is triggered when the logout button is clicked.
+     */
     @FXML
     void handleLogoutButtonClick(ActionEvent event) {
         Session.getInstance().logout();
         GuiHelper.switchView(anchorPane, Views.LOGIN);
     }
 
+	/**
+     * Handles the "Next Events" button click.
+     * This method increases the events page counter if there are more events to show.
+     * It ensures that there are enough events remaining to display on the next page.
+     */
     @FXML
     void handleNextEventsButtonClick(ActionEvent event) {
         if (events != null && (eventsPage + 1) * 3 < events.size()) {
@@ -307,6 +372,12 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
         }
     }
 
+	/**
+     * Navigates the user to their personal account page based on their role.
+     * If the user is an organizer, they are directed to the organizer's page.
+     * If the user is not an organizer, they are directed to their general account page.
+     * If the user is not logged in, they are redirected to the login page.
+     */
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
 		User currentUser = Session.getInstance().getCurrentUser();
@@ -324,15 +395,58 @@ public class AccountOrganizerPortfolioPageView implements Initializable {
 		}
     }
 
+	/**
+     * Placeholder method for the search bar functionality.
+     * This method is intended to handle user input from a search bar, but the implementation is not provided yet.
+     */
     @FXML
     void handleSearchBar(ActionEvent event) { }
 
+	/**
+     * Placeholder method for the search button click functionality.
+     * This method is meant to handle the event when the search button is clicked, but the implementation is not provided yet.
+     */
     @FXML
     void handleSearchButtoneClick(MouseEvent event) { }
 
+	/**
+	 * Handles the click event on the "View" buttons for events.
+	 * Navigates to the event page displaying the selected event details.
+	 * 
+	 * @param event The ActionEvent triggered by clicking the "View" button.
+	 */
     @FXML
-    void handleViewButtonClick(ActionEvent event) { }
+    void handleViewButtonClick(ActionEvent event) { 
+		if (Session.getInstance().getCurrentUser() == null) {
+			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+		}
 
+		Button source = (Button) event.getSource();
+		int index = -1;
+		
+		if (source == this.eventView1) {
+			index = eventsPage * 3;
+		} else if (source == this.eventView2) {
+			index = eventsPage * 3 + 1;
+		} else if (source == this.eventView3) {
+			index = eventsPage * 3 + 2;
+		}
+
+		if (index >= 0 && index < this.events.size()) {
+			EventContext.getInstance().setSelectedEvent(this.events.get(index));
+			GuiHelper.switchView(this.anchorPane, Views.EVENT_PAGE);
+		} else {
+			showError("Error", "Event not found.");
+		}
+		
+	}
+
+	/**
+	 * Utility method to display an error dialog with the given title and message.
+	 *
+	 * @param title the title of the error dialog
+	 * @param msg the error message to display
+	 */
     private void showError(String title, String msg) {
         Alert a = new Alert(AlertType.ERROR, msg, ButtonType.OK);
         a.setHeaderText(title);

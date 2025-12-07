@@ -25,9 +25,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
- * CodeBehind To Handle Processing for the Home Page
- *
- * @author	Jacob Baker
+ * HomePageView class handles the UI logic for displaying events on the home page.
+ * It manages the event list display and allows users to navigate to event details.
+ * 
+ * @author Jacob Baker
  * @version Fall 2025
  */
 public class HomePageView {
@@ -89,12 +90,21 @@ public class HomePageView {
     @FXML
     private Button login;
 
-
+    /**
+     * Switches the view to the homepage when the home button is clicked.
+     * 
+     * @param event The MouseEvent triggered by clicking the home button.
+     */
     @FXML
     void handleHomeClick(MouseEvent event) {
         GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
     }
 
+    /**
+     * Switches the view to the login page when the login button is clicked, if no current user is logged in.
+     * 
+     * @param event The ActionEvent triggered by clicking the login button.
+     */
     @FXML
     void handleLoginButtonClick(ActionEvent event) {
         if (Session.getInstance().getCurrentUser() == null) {
@@ -102,6 +112,12 @@ public class HomePageView {
         }
     }
 
+    /**
+     * Switches the view to the personal account page if the current user has a personal account.
+     * If not, it navigates to the login page.
+     * 
+     * @param event The MouseEvent triggered by clicking the personal account button.
+     */
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
         User currentUser = Session.getInstance().getCurrentUser();
@@ -118,18 +134,37 @@ public class HomePageView {
         }
     }
 
+    /**
+     * Handles the action when the search bar is used. Not implemented yet.
+     * 
+     * @param event The ActionEvent triggered by the search bar.
+     */
     @FXML
     void handleSearchBar(ActionEvent event) {
         // Not implemented yet
     }
 
+    /**
+     * Handles the action when the search button is clicked. Not implemented yet.
+     * 
+     * @param event The MouseEvent triggered by clicking the search button.
+     */
     @FXML
     void handleSearchButtoneClick(MouseEvent event) {
         // Not implemented yet
     }
 
+    /**
+     * Handles the click event on the "View" buttons for events.
+     * Navigates to the event page displaying the selected event details.
+     * 
+     * @param event The ActionEvent triggered by clicking the "View" button.
+     */
     @FXML
 	void handleViewButtonClick(ActionEvent event) {
+        if (Session.getInstance().getCurrentUser() == null) {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+        }
 		Button source = (Button) event.getSource();
 
 		int index = -1;
@@ -147,11 +182,20 @@ public class HomePageView {
 		}
 	}
 
-
+    /**
+     * Retrieves all events from the EventManager and displays them on the homepage.
+     * 
+     * @return List of all events fetched from the EventManager.
+     * @throws Exception If an error occurs while retrieving events.
+     */
     public static List<Event> getAllEvents() throws Exception {
         return EventManager.getAllEvents();
     }
 
+    /**
+     * Initializes the homepage by setting the username if the user is logged in
+     * and loading the events to display on the homepage.
+     */
     @FXML
     void initialize() {
         if (Session.getInstance().getCurrentUser() != null) {
@@ -167,6 +211,10 @@ public class HomePageView {
 
 	private List<Event> displayedEvents = new ArrayList<>();
 
+    /**
+     * Loads a list of random events and displays them on the homepage.
+     * The events are shown up to a maximum of 3.
+     */
     private void loadRandomEventsToHome() {
 		Pane[] panes = {this.eventPane1, this.eventPane2, this.eventPane3};
 		TextField[] editors = {this.eventEdit1, this.eventEdit2, this.eventEdit3};
@@ -201,9 +249,12 @@ public class HomePageView {
 		this.setEventSlotVisible(this.eventPane4, false);
 	}
 
-
-
-
+    /**
+     * Returns a summary of the event, including description, location, start date, and end date.
+     * 
+     * @param event The event whose details need to be summarized.
+     * @return A string containing the event summary.
+     */
     private String getSafeEventSummary(Event event) {
         if (event == null) {
             return "";
@@ -231,12 +282,23 @@ public class HomePageView {
         return sb.toString();
     }
 
+     /**
+     * Sets the visibility of a given event pane.
+     * 
+     * @param pane The pane whose visibility is to be set.
+     * @param visible The visibility state to set (true or false).
+     */
     private void setEventSlotVisible(Pane pane, boolean visible) {
         if (pane != null) {
             pane.setVisible(visible);
         }
     }
 
+    /**
+     * Clears the text content of a given input control.
+     * 
+     * @param control The input control whose text is to be cleared.
+     */
     private void clearText(javafx.scene.control.TextInputControl control) {
         if (control != null) {
             control.clear();

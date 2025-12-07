@@ -6,8 +6,22 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DBEventOps class provides database operations for handling events.
+ * This includes methods to insert, delete, retrieve, and map events from the database.
+ * 
+ * @author Jacob Baker
+ * @version Fall 2025
+ */
 public class DBEventOps {
 
+    /**
+     * Maps a ResultSet row to an Event object.
+     *
+     * @param rs the ResultSet containing the event data
+     * @return an Event object populated with data from the ResultSet
+     * @throws SQLException if an SQL error occurs while processing the result set
+     */
     private static Event mapRow(ResultSet rs) throws SQLException {
         Event e = new Event();
         e.setEventId(rs.getInt("event_id"));
@@ -28,6 +42,13 @@ public class DBEventOps {
         return e;
     }
 
+    /**
+     * Retrieves a list of events by the organizer's user ID.
+     *
+     * @param organizerUserId the user ID of the event organizer
+     * @return a list of events created by the given organizer
+     * @throws Exception if an error occurs while querying the database
+     */
     public static List<Event> findByOrganizer(int organizerUserId) throws Exception {
         String sql = "SELECT * FROM events WHERE user_id = ?";
         Connection conn = AzurePgsqlServer.getInstance().getConnection();
@@ -42,6 +63,19 @@ public class DBEventOps {
         return list;
     }
 
+    /**
+     * Inserts a new event into the database.
+     *
+     * @param organizerUserId the user ID of the event organizer
+     * @param title the title of the event
+     * @param location the location of the event
+     * @param description a description of the event
+     * @param rubric the rubric for the event
+     * @param start the start date and time of the event
+     * @param end the end date and time of the event
+     * @return the newly created Event object
+     * @throws Exception if an error occurs while inserting the event into the database
+     */
     public static Event insertEvent(
             int organizerUserId,
             String title,
@@ -83,6 +117,12 @@ public class DBEventOps {
         return event;
     }
 
+    /**
+     * Deletes an event from the database by event ID.
+     *
+     * @param eventId the ID of the event to be deleted
+     * @throws Exception if an error occurs while deleting the event from the database
+     */
     public static void deleteEvent(int eventId) throws Exception {
         String sql = "DELETE FROM events WHERE event_id = ?";
 
@@ -94,6 +134,12 @@ public class DBEventOps {
         }
     }
 
+    /**
+     * Retrieves a list of all events from the database.
+     *
+     * @return a list of all events in the database
+     * @throws Exception if an error occurs while querying the database
+     */
     public static List<Event> findAllEvents() throws Exception {
         String sql = "SELECT event_id, user_id, title, event_location, description, rubric, "
                 + "start_datetime, end_datetime, status "
@@ -112,6 +158,4 @@ public class DBEventOps {
 
         return events;
     }
-
-
 }

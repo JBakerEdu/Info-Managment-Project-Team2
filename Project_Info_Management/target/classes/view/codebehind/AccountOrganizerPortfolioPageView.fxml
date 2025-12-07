@@ -73,12 +73,12 @@
       <Separator layoutX="49.0" layoutY="157.0" prefHeight="6.0" prefWidth="513.0" />
       <ImageView fx:id="profileImage" fitHeight="35.0" fitWidth="42.0" layoutX="12.0" layoutY="20.0" onMouseClicked="#handlePersonalAccountClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../../../../../../../../../target/classes/view/codebehind/images/default-avatar.jpg" />
+            <Image url="@images/default-avatar.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="413.0" layoutY="20.0" onMouseClicked="#handleSearchButtoneClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../../../../../../../../../target/classes/view/codebehind/images/search-icon.png" />
+            <Image url="@../../../target/classes/view/codebehind/images/search-icon.png" />
          </image>
       </ImageView>
       <Button fx:id="nextEventsButton" layoutX="483.0" layoutY="859.0" mnemonicParsing="false" onAction="#handleNextEventsButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="Next 3" textFill="WHITE">
@@ -86,9 +86,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Pane fx:id="projectPane1" layoutX="58.0" layoutY="303.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
+      <Pane fx:id="eventPane1" layoutX="58.0" layoutY="303.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
          <children>
-            <Button fx:id="projectView1" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
+            <Button fx:id="eventView1" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -103,8 +103,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea fx:id="projectDescription1" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
-            <TextField fx:id="projectName1" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
+            <TextArea fx:id="eventDescription1" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
+            <TextField fx:id="eventName1" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
             <Button fx:id="delete1" layoutX="444.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleDeleteEventsButtonClick" prefHeight="30.0" prefWidth="41.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
@@ -112,9 +112,9 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="projectPane2" layoutX="58.0" layoutY="466.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
+      <Pane fx:id="eventPane2" layoutX="58.0" layoutY="466.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
          <children>
-            <Button fx:id="projectView2" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
+            <Button fx:id="eventView2" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -134,13 +134,13 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea fx:id="projectDescription2" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
-            <TextField fx:id="projectName2" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
+            <TextArea fx:id="eventDescription2" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
+            <TextField fx:id="eventName2" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
          </children>
       </Pane>
-      <Pane fx:id="projectPane3" layoutX="58.0" layoutY="630.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
+      <Pane fx:id="eventPane3" layoutX="58.0" layoutY="630.0" prefHeight="153.0" prefWidth="495.0" style="-fx-background-color: #6e7383;">
          <children>
-            <Button fx:id="projectView3" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
+            <Button fx:id="eventView3" layoutX="213.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleViewButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="View" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -160,8 +160,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea fx:id="projectDescription3" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
-            <TextField fx:id="projectName3" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
+            <TextArea fx:id="eventDescription3" editable="false" layoutX="102.0" layoutY="47.0" prefHeight="44.0" prefWidth="336.0" wrapText="true" />
+            <TextField fx:id="eventName3" editable="false" layoutX="102.0" layoutY="15.0" prefHeight="25.0" prefWidth="336.0" />
          </children>
       </Pane>
       <Button fx:id="lastEventsButton" layoutX="58.0" layoutY="859.0" mnemonicParsing="false" onAction="#handleLastEventsButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="Last 3" textFill="WHITE">
@@ -184,5 +184,10 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <ImageView fx:id="searchImage" fitHeight="35.0" fitWidth="42.0" layoutX="396.0" layoutY="19.0" onMouseClicked="#handlePersonalAccountClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@images/search-icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
