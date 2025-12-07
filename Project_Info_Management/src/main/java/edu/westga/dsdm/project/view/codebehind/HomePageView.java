@@ -1,12 +1,17 @@
 package edu.westga.dsdm.project.view.codebehind;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import edu.westga.dsdm.project.model.User;
 import edu.westga.dsdm.project.model.Project;
+import edu.westga.dsdm.project.model.Event;
+import edu.westga.dsdm.project.model.EventManager;
 import edu.westga.dsdm.project.model.ProjectContext;
+import edu.westga.dsdm.project.model.EventContext;
 import edu.westga.dsdm.project.model.AccountManager;
 import edu.westga.dsdm.project.model.Session;
+import edu.westga.dsdm.project.azurepgsql.DBEventOps;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,232 +25,283 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
- * CodeBehind To Handle Processing for the Home Page
- *
- * @author	Jacob Baker
- * @version Spring 2025
+ * HomePageView class handles the UI logic for displaying events on the home page.
+ * It manages the event list display and allows users to navigate to event details.
+ * 
+ * @author Jacob Baker
+ * @version Fall 2025
  */
 public class HomePageView {
-	private Project[] displayedProjects = new Project[4];
 	
-	@FXML
-    private AnchorPane anchorPane;
-	
-	@FXML
+    @FXML
     private Label accountHeader;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private TextArea eventDescription1;
+
+    @FXML
+    private TextArea eventDescription2;
+
+    @FXML
+    private TextArea eventDescription3;
+
+    @FXML
+    private TextArea eventDescription4;
+
+    @FXML
+    private TextField eventEdit1;
+
+    @FXML
+    private TextField eventEdit2;
+
+    @FXML
+    private TextField eventEdit3;
+
+    @FXML
+    private TextField eventEdit4;
+
+    @FXML
+    private Pane eventPane1;
+
+    @FXML
+    private Pane eventPane2;
+
+    @FXML
+    private Pane eventPane3;
+
+    @FXML
+    private Pane eventPane4;
+
+    @FXML
+    private Button eventView1;
+
+    @FXML
+    private Button eventView2;
+
+    @FXML
+    private Button eventView3;
+
+    @FXML
+    private Button eventView4;
 
     @FXML
     private Button login;
 
-    @FXML
-    private TextArea projectDescription1;
-
-    @FXML
-    private TextArea projectDescription2;
-
-    @FXML
-    private TextArea projectDescription3;
-
-    @FXML
-    private TextArea projectDescription4;
-
-    @FXML
-    private TextField projectEdit1;
-
-    @FXML
-    private TextField projectEdit2;
-
-    @FXML
-    private TextField projectEdit3;
-
-    @FXML
-    private TextField projectEdit4;
-
-    @FXML
-    private ImageView projectImage1;
-
-    @FXML
-    private ImageView projectImage2;
-
-    @FXML
-    private ImageView projectImage3;
-
-    @FXML
-    private ImageView projectImage4;
-
-    @FXML
-    private Pane projectPane1;
-
-    @FXML
-    private Pane projectPane2;
-
-    @FXML
-    private Pane projectPane3;
-
-    @FXML
-    private Pane projectPane4;
-
-    @FXML
-    private Button projectView1;
-
-    @FXML
-    private Button projectView2;
-
-    @FXML
-    private Button projectView3;
-
-    @FXML
-    private Button projectView4;
-
+    /**
+     * Switches the view to the homepage when the home button is clicked.
+     * 
+     * @param event The MouseEvent triggered by clicking the home button.
+     */
     @FXML
     void handleHomeClick(MouseEvent event) {
-		GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
+        GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
     }
 
+    /**
+     * Switches the view to the login page when the login button is clicked, if no current user is logged in.
+     * 
+     * @param event The ActionEvent triggered by clicking the login button.
+     */
     @FXML
     void handleLoginButtonClick(ActionEvent event) {
-		if (Session.getInstance().getCurrentUser() == null) {
-			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
-		}
+        if (Session.getInstance().getCurrentUser() == null) {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+        }
     }
 
+    /**
+     * Switches the view to the personal account page if the current user has a personal account.
+     * If not, it navigates to the login page.
+     * 
+     * @param event The MouseEvent triggered by clicking the personal account button.
+     */
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
-		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
-		} else {
-			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
-		}
+        User currentUser = Session.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String role = currentUser.getRole();
+            if ("organizer".equalsIgnoreCase(role)) {
+                GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+            } else {
+                GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+            }
+        } else {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+        }
     }
 
+    /**
+     * Handles the action when the search bar is used. Not implemented yet.
+     * 
+     * @param event The ActionEvent triggered by the search bar.
+     */
     @FXML
     void handleSearchBar(ActionEvent event) {
-		// Not implemented yet
+        // Not implemented yet
     }
 
+    /**
+     * Handles the action when the search button is clicked. Not implemented yet.
+     * 
+     * @param event The MouseEvent triggered by clicking the search button.
+     */
     @FXML
     void handleSearchButtoneClick(MouseEvent event) {
-		// Not implemented yet
+        // Not implemented yet
     }
 
+    /**
+     * Handles the click event on the "View" buttons for events.
+     * Navigates to the event page displaying the selected event details.
+     * 
+     * @param event The ActionEvent triggered by clicking the "View" button.
+     */
     @FXML
-    void handleViewButtonClick(ActionEvent event) {
+	void handleViewButtonClick(ActionEvent event) {
+        if (Session.getInstance().getCurrentUser() == null) {
+            GuiHelper.switchView(this.anchorPane, Views.LOGIN);
+        }
 		Button source = (Button) event.getSource();
 
 		int index = -1;
-		if (source == this.projectView1) {
+		if (source == this.eventView1) {
 			index = 0;
-		} else if (source == this.projectView2) {
+		} else if (source == this.eventView2) {
 			index = 1;
-		} else if (source == this.projectView3) {
+		} else if (source == this.eventView3) {
 			index = 2;
-		} else if (source == this.projectView4) {
-			index = 3;
 		}
 
-		if (index >= 0 && this.displayedProjects[index] != null) {
-			ProjectContext.getInstance().setSelectedProject(this.displayedProjects[index]);
-			GuiHelper.switchView(this.anchorPane, Views.PROJECTS);
+		if (index >= 0 && this.displayedEvents.size() > index) {
+			EventContext.getInstance().setSelectedEvent(this.displayedEvents.get(index));
+			GuiHelper.switchView(this.anchorPane, Views.EVENT_PAGE);
 		}
-	}
-	
-	/**
-	* this returns the anchor pane that will be changed 
-	*
-	* @return anchorPane that is in use to help change views
-	*/
-	public AnchorPane getAnchorPane() {
-		return this.anchorPane;
 	}
 
-	/**
-	*this sets the anchorPane that will be used as the view
-	*
-	* @param tempAnchorPane which it the anchor pane being set to
-	*/
-	public void setAnchorPane(AnchorPane tempAnchorPane) {
-		this.anchorPane = tempAnchorPane;
-	}
-	
-	@FXML
-	void initialize() {
-		if (Session.getInstance().getCurrentUser() != null) {
-			String username = Session.getInstance().getCurrentUser().getFirstName();
-			this.accountHeader.setText(username);
-			this.login.setDisable(true);
-			this.login.setVisible(false);
-		} else {
-			this.accountHeader.setText("Account");
-		}
-		this.loadRandomProjectsToHome();
-	}
-	
-	private void loadRandomProjectsToHome() {
-		Pane[] panes = { this.projectPane1, this.projectPane2, this.projectPane3, this.projectPane4 };
-		TextField[] editors = { this.projectEdit1, this.projectEdit2, this.projectEdit3, this.projectEdit4 };
-		TextArea[] descriptions = { this.projectDescription1, this.projectDescription2, this.projectDescription3, this.projectDescription4 };
+    /**
+     * Retrieves all events from the EventManager and displays them on the homepage.
+     * 
+     * @return List of all events fetched from the EventManager.
+     * @throws Exception If an error occurs while retrieving events.
+     */
+    public static List<Event> getAllEvents() throws Exception {
+        return EventManager.getAllEvents();
+    }
+
+    /**
+     * Initializes the homepage by setting the username if the user is logged in
+     * and loading the events to display on the homepage.
+     */
+    @FXML
+    void initialize() {
+        if (Session.getInstance().getCurrentUser() != null) {
+            String username = Session.getInstance().getCurrentUser().getFirstName();
+            this.accountHeader.setText(username);
+            this.login.setDisable(true);
+            this.login.setVisible(false);
+        } else {
+            this.accountHeader.setText("Account");
+        }
+        this.loadRandomEventsToHome();
+    }
+
+	private List<Event> displayedEvents = new ArrayList<>();
+
+    /**
+     * Loads a list of random events and displays them on the homepage.
+     * The events are shown up to a maximum of 3.
+     */
+    private void loadRandomEventsToHome() {
+		Pane[] panes = {this.eventPane1, this.eventPane2, this.eventPane3};
+		TextField[] editors = {this.eventEdit1, this.eventEdit2, this.eventEdit3};
+		TextArea[] descriptions = {this.eventDescription1, this.eventDescription2, this.eventDescription3};
+
 		for (int i = 0; i < panes.length; i++) {
-			this.setProjectSlotVisible(panes[i], false);
+			this.setEventSlotVisible(panes[i], false);
 			this.clearText(editors[i]);
 			this.clearText(descriptions[i]);
 		}
-
-//		List<User> users = AccountManager.getAllAccounts();
-//		if (users == null || users.isEmpty()) {
-//			return;
-//		}
-//		Collections.shuffle(users);
-//		int filled = 0;
-//		int attempts = 0;
-//		while (filled < 4 && attempts < users.size()) {
-//			User user = users.get(attempts++);
-//			Project validProject = this.getRandomProjectFromUser(user);
-//			if (validProject != null) {
-//				this.setProjectSlotVisible(panes[filled], true);
-//				editors[filled].setText(this.getSafeDate(validProject));
-//				descriptions[filled].setText(this.getSafeDescription(validProject));
-//				this.displayedProjects[filled] = validProject;
-//				filled++;
-//			}
-//		}
-	}
-	
-	private Project getRandomProjectFromUser(User user) {
-		if (user == null) {
-			return null;
+		List<Event> allEvents;
+		try {
+			allEvents = EventManager.getAllEvents();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return;
 		}
 
-//		List<Project> projects = user.getProjectManager().getProjects();
-//		if (projects == null || projects.isEmpty()) {
-//			return null;
-//		}
-//
-//		Collections.shuffle(projects);
-//		for (Project project : projects) {
-//			if (project != null) {
-//				return project;
-//			}
-//		}
-		return null;
-	}
-
-	private void setProjectSlotVisible(Pane pane, boolean visible) {
-		if (pane != null) {
-			pane.setVisible(visible);
+		if (allEvents == null || allEvents.isEmpty()) {
+			return;
 		}
-	}
 
-	private void clearText(javafx.scene.control.TextInputControl control) {
-		if (control != null) {
-			control.clear();
+		Collections.shuffle(allEvents);
+		this.displayedEvents = allEvents;
+		int toShow = Math.min(3, allEvents.size());
+		for (int i = 0; i < toShow; i++) {
+			Event e = allEvents.get(i);
+			this.setEventSlotVisible(panes[i], true);
+			editors[i].setText(e.getTitle());
+			descriptions[i].setText(this.getSafeEventSummary(e));
 		}
+		this.setEventSlotVisible(this.eventPane4, false);
 	}
 
-	private String getSafeDate(Project project) {
-		return (project.getFormattedLastEdited() != null) ? project.getFormattedLastEdited() : "Unknown Date";
-	}
+    /**
+     * Returns a summary of the event, including description, location, start date, and end date.
+     * 
+     * @param event The event whose details need to be summarized.
+     * @return A string containing the event summary.
+     */
+    private String getSafeEventSummary(Event event) {
+        if (event == null) {
+            return "";
+        }
 
-	private String getSafeDescription(Project project) {
-		return (project.getDescription() != null) ? project.getDescription() : "(No description)";
-	}
+        StringBuilder sb = new StringBuilder();
+
+        if (event.getDescription() != null && !event.getDescription().isBlank()) {
+            sb.append(event.getDescription());
+        } else {
+            sb.append("(No description)");
+        }
+
+        if (event.getEventLocation() != null && !event.getEventLocation().isBlank()) {
+            sb.append("\nLocation: ").append(event.getEventLocation());
+        }
+
+        if (event.getStartDateTime() != null) {
+            sb.append("\nStarts: ").append(event.getStartDateTime());
+        }
+        if (event.getEndDateTime() != null) {
+            sb.append("\nEnds: ").append(event.getEndDateTime());
+        }
+
+        return sb.toString();
+    }
+
+     /**
+     * Sets the visibility of a given event pane.
+     * 
+     * @param pane The pane whose visibility is to be set.
+     * @param visible The visibility state to set (true or false).
+     */
+    private void setEventSlotVisible(Pane pane, boolean visible) {
+        if (pane != null) {
+            pane.setVisible(visible);
+        }
+    }
+
+    /**
+     * Clears the text content of a given input control.
+     * 
+     * @param control The input control whose text is to be cleared.
+     */
+    private void clearText(javafx.scene.control.TextInputControl control) {
+        if (control != null) {
+            control.clear();
+        }
+    }
 }

@@ -1,4 +1,6 @@
 package edu.westga.dsdm.project.azurepgsql;
+import java.util.List;
+import java.util.ArrayList;
 import edu.westga.dsdm.project.model.User;
 import java.sql.*;
 import java.util.logging.Logger;
@@ -10,6 +12,8 @@ import java.util.logging.Logger;
  * prepared queries. All methods obtain a connection through
  * {@link AzurePgsqlServer#getInstance()} and either modify or retrieve
  * user data in the database
+ * 
+ * @author Kate and Jacob
  */
 public class DBUserOps {
 
@@ -145,4 +149,53 @@ public class DBUserOps {
                 rs.getString("role_at_event")
         );
     }
+
+    /**
+     * Retrieves all users from the database.
+     * 
+     * This method queries the database for all users and returns them as a list. 
+     * It fetches the user details from the `users` table and maps them to `User` objects.
+     * 
+     * @return A list of all users from the database.
+     * @throws Exception If an error occurs while querying the database or processing the result set.
+     */
+    public static List<User> getAllUsers() throws Exception {
+        List<User> users = new ArrayList<>();
+
+        String sql = "SELECT * FROM users";
+        Connection conn = AzurePgsqlServer.getInstance().getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            users.add(mapUser(rs));
+        }
+
+        return users;
+    }
+
+    /**
+     * Finds a user by their user_id by fetching all users and iterating.
+     *
+     * @param userId the ID of the user to find
+     * @return matching User or null if not found
+     * @throws Exception if database access fails
+     */
+    public static User findUserByIdIterative(int userId) throws Exception {
+        List<User> users = getAllUsers();  // You already have this method
+
+        if (users == null || users.isEmpty()) {
+            return null;
+        }
+
+        for (User user : users) {
+            if (user.getUserId() == userId) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+
 }

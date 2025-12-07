@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * CodeBehind To Handle Processing for the Create Account Page
  *
- * @author	Kate Anglin
+ * @author	Kate Anglin and Jacob
  * @version Spring 2025
  */
 public class CreateAccountPageView {
@@ -163,8 +163,16 @@ public class CreateAccountPageView {
 
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
-		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+		User currentUser = Session.getInstance().getCurrentUser();
+
+		if (currentUser != null) {
+			String role = currentUser.getRole();
+
+			if ("organizer".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else {
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			}
 		} else {
 			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
 		}

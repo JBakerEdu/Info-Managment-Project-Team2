@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * CodeBehind To Handle Processing for the Login Page
  *
- * @author	Kate Anglin
+ * @author	Kate Anglin and Jacob
  * @version Fall 2025
  */
 public class LoginPageView {
@@ -67,7 +67,13 @@ public class LoginPageView {
 			}
 			Session.getInstance().login(user);
 			AccountContext.getInstance().setUserToView(user);
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			String role = user.getRole();
+
+			if ("organizer".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else {
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			this.errorNotValidEmail.setText("Server error — try again.");
@@ -82,8 +88,16 @@ public class LoginPageView {
 
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
-		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+		User currentUser = Session.getInstance().getCurrentUser();
+
+		if (currentUser != null) {
+			String role = currentUser.getRole();
+
+			if ("organizer".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else {
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			}
 		} else {
 			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
 		}

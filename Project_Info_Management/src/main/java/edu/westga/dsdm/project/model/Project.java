@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * Represents a project in the user's portfolio.
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public class Project {
     private String name;

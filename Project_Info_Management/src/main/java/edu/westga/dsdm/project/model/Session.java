@@ -4,7 +4,7 @@ package edu.westga.dsdm.project.model;
  * Singleton class that manages the current logged-in user session.
  * 
  * @author Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public final class Session {
     private static Session instance = null;

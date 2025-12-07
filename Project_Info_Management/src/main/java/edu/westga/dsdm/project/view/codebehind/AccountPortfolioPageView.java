@@ -21,10 +21,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
- * CodeBehind To Handle Processing for the Accounts Portfolio Page
+ * This is out dated example code for assistance and viewing only... will be removed soon
  *
  * @author	Jacob Baker
- * @version Spring 2025
+ * @version Fall 2025
  */
 public class AccountPortfolioPageView {
 	private List<Project> currentProjects;
@@ -237,8 +237,16 @@ public class AccountPortfolioPageView {
 
     @FXML
     void handlePersonalAccountClick(MouseEvent event) {
-		if (Session.getInstance().getCurrentUser() != null) {
-			GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+		User currentUser = Session.getInstance().getCurrentUser();
+
+		if (currentUser != null) {
+			String role = currentUser.getRole();
+
+			if ("organizer".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else {
+				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+			}
 		} else {
 			GuiHelper.switchView(this.anchorPane, Views.LOGIN);
 		}
