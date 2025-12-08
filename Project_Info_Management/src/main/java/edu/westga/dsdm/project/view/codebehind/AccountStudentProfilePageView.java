@@ -12,10 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-
 import edu.westga.dsdm.project.azurepgsql.DBEventOps;
 import edu.westga.dsdm.project.model.AccountManager;
 import edu.westga.dsdm.project.model.EventManager;
@@ -113,34 +109,18 @@ public class AccountStudentProfilePageView {
         }
     }
 
-    private void showEventNamesAlert(List<Event> events) {
-        StringBuilder builder = new StringBuilder();
-
-        for (Event event : events) {
-            builder.append("• ").append(event.getTitle()).append("\n");
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Registered Events");
-        alert.setHeaderText("Events for This Student");
-        alert.setContentText(builder.toString());
-
-        alert.showAndWait();
-    }
-
     void loadStudentProjects() {
         try {
-            List<int> allEvents = DBEventOps.getRegisteredEvents(user.getUserId());
+            List<Integer> allRegisteredEvents = DBEventOps.getRegisteredEvents(user.getUserId());
+            List<Event> allEvents = DBEventOps.findAllEvents();
 
             for (Event event : allEvents) {
-                this.listStudentProjects.getItems().add(event);
+                for (int eventId : allRegisteredEvents) {
+                    if (eventId == event.getEventId()) {
+                        this.listStudentProjects.getItems().add(event);
+                    }
+                }
             }
-
-
-
-            // show alert popup with event names
-            showEventNamesAlert(allEvents);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

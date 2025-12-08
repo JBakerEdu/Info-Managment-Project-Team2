@@ -2,6 +2,7 @@ package edu.westga.dsdm.project.azurepgsql;
 
 import edu.westga.dsdm.project.model.Event;
 import edu.westga.dsdm.project.model.User;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * DBEventOps class provides database operations for handling events.
  * This includes methods to insert, delete, retrieve, and map events from the database.
- * 
+ *
  * @author Jacob Baker
  * @version Fall 2025
  */
@@ -68,12 +69,12 @@ public class DBEventOps {
      * Inserts a new event into the database.
      *
      * @param organizerUserId the user ID of the event organizer
-     * @param title the title of the event
-     * @param location the location of the event
-     * @param description a description of the event
-     * @param rubric the rubric for the event
-     * @param start the start date and time of the event
-     * @param end the end date and time of the event
+     * @param title           the title of the event
+     * @param location        the location of the event
+     * @param description     a description of the event
+     * @param rubric          the rubric for the event
+     * @param start           the start date and time of the event
+     * @param end             the end date and time of the event
      * @return the newly created Event object
      * @throws Exception if an error occurs while inserting the event into the database
      */
@@ -88,7 +89,7 @@ public class DBEventOps {
     ) throws Exception {
 
         String sql = "INSERT INTO events (user_id, title, event_location, description, rubric, start_datetime, end_datetime) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING event_id, status";
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING event_id, status";
 
         Connection conn = AzurePgsqlServer.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -128,7 +129,7 @@ public class DBEventOps {
         String sql = "DELETE FROM events WHERE event_id = ?";
 
         try (Connection conn = AzurePgsqlServer.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, eventId);
             stmt.executeUpdate();
@@ -149,8 +150,8 @@ public class DBEventOps {
         List<Event> events = new ArrayList<>();
 
         try (Connection conn = AzurePgsqlServer.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 events.add(mapRow(rs));
@@ -161,35 +162,40 @@ public class DBEventOps {
     }
 
     public static void registerStudentToEvent(User teacher, Event event, User student) throws Exception {
-        String sql = "{ CALL register_student_for_event(?, ?, ?) }";
+        String sql = "CALL register_student_for_event(?, ?, ?)";
 
-        try {
-            Connection conn = AzurePgsqlServer.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = AzurePgsqlServer.getInstance().getConnection();
+             CallableStatement stmt = conn.prepareCall(sql)) {
 
             stmt.setInt(1, teacher.getUserId());
             stmt.setInt(2, event.getEventId());
             stmt.setInt(3, student.getUserId());
 
-            System.out.println(teacher.getUserId() + ", " + event.getEventId() + ", " + student.getUserId());
-        } catch (Exception e) {
+            stmt.execute();
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
-    public static List<int> getRegisteredEvents(int userId) throws Exception {
-        String sql = "SELECT * FROM event_registrations WHERE user_id = ?";
+    public static List<Integer> getRegisteredEvents(int userId) throws Exception {
+        String sql = "SELECT *FROM event_registrations WHERE user_id = ?";
 
-        Connection conn = AzurePgsqlServer.getInstance().getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
+        try {
+            Connection conn = AzurePgsqlServer.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-        stmt.setInt(1, userId);
-        ResultSet rs = stmt.executeQuery();
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
 
-        List<int> list = new ArrayList<>();
-        while (rs.next()) {
-            list.add(mapRow(rs));
+            List<Integer> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getInt("event_id"));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return list;
+        return null;
     }
 }

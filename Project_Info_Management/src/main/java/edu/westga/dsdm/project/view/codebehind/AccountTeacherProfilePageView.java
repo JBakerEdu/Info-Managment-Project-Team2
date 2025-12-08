@@ -106,9 +106,6 @@ public class AccountTeacherProfilePageView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        this.selectedEvent = null;
-        this.seletedStudent = null;
     }
 
     private User user;
