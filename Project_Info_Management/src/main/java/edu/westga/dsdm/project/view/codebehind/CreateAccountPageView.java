@@ -88,7 +88,16 @@ public class CreateAccountPageView {
 				User newUser = AccountManager.validateLogin(email, password);
 				Session.getInstance().login(newUser);
 				AccountContext.getInstance().setUserToView(newUser);
-				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+				//GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+				if ("organizer".equalsIgnoreCase(role)) {
+					GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+				}else if ("Teacher".equalsIgnoreCase(role)) {
+					GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+				} else if ("Student".equalsIgnoreCase(role)) {
+					GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
+				} else {
+					GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
+				}
 			} else {
 				this.errorNotValidEmail.setVisible(true);
 			}
@@ -170,6 +179,10 @@ public class CreateAccountPageView {
 
 			if ("organizer".equalsIgnoreCase(role)) {
 				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			}else if ("Teacher".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+			} else if ("Student".equalsIgnoreCase(role)) {
+				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
 			} else {
 				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
 			}

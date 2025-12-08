@@ -95,7 +95,12 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="logout" layoutX="389.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleLogoutButtonClick" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #d4124e; -fx-cursor: hand;" text="Logout" textFill="WHITE">
+      <Button fx:id="logout" layoutX="255.0" layoutY="891.0" mnemonicParsing="false" onAction="#handleLogoutButtonClick" style="-fx-background-color: d4124e;" text="Logout" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteUser" layoutX="339.0" layoutY="891.0" mnemonicParsing="false" onAction="#handleDeleteUserButtonClick" style="-fx-background-color: d4124e;" text="Delete Account" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

@@ -1,24 +1,26 @@
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\AzurePgsqlServer.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\DBEventOps.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\DBUserOps.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\Launcher.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\Main.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\AccountContext.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\AccountManager.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Event.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\EventContext.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\EventManager.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Project.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\ProjectContext.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\ProjectManager.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Session.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\User.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\util\EncryptionService.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountOrganizerPortfolioPageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountPortfolioPageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\CreateAccountPageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\EventPageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\GuiHelper.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\HomePageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\LoginPageView.java
-C:\Users\jb00645\Desktop\New folder (5)\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\Views.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\AzurePgsqlServer.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\DBEventOps.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\azurepgsql\DBUserOps.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\Launcher.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\Main.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\AccountContext.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\AccountManager.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Event.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\EventContext.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\EventManager.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Project.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\ProjectContext.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\ProjectManager.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\Session.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\model\User.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\util\EncryptionService.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountOrganizerPortfolioPageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountPortfolioPageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountStudentProfilePageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\AccountTeacherProfilePageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\CreateAccountPageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\EventPageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\GuiHelper.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\HomePageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\LoginPageView.java
+C:\Users\sb00134\Desktop\InfoMgt\Sprint4\Info-Managment-Project-Team2\Project_Info_Management\src\main\java\edu\westga\dsdm\project\view\codebehind\Views.java

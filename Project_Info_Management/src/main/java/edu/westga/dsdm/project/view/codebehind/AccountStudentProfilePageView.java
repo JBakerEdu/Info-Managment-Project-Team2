@@ -1,6 +1,7 @@
 package edu.westga.dsdm.project.view.codebehind;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,12 +12,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+
+import edu.westga.dsdm.project.azurepgsql.DBEventOps;
+import edu.westga.dsdm.project.model.AccountManager;
+import edu.westga.dsdm.project.model.EventManager;
 import edu.westga.dsdm.project.model.Session;
 import edu.westga.dsdm.project.model.User;
+import edu.westga.dsdm.project.model.Event;
 import edu.westga.dsdm.project.model.AccountContext;
 import edu.westga.dsdm.project.model.Project;
-import edu.westga.dsdm.project.model.ProjectManager;
-import edu.westga.dsdm.project.model.ProjectContext;
 
 public class AccountStudentProfilePageView {
 
@@ -39,6 +46,9 @@ public class AccountStudentProfilePageView {
     private Button logout;
 
     @FXML
+    private Button deleteUser;
+
+    @FXML
     private Label labelEmail;
 
     @FXML
@@ -48,7 +58,7 @@ public class AccountStudentProfilePageView {
     private Label labelRole;
 
     @FXML
-    private ListView<?> listStudentProjects;
+    private ListView<Event> listStudentProjects;
 
     @FXML
     private ImageView profileImage;
@@ -76,10 +86,12 @@ public class AccountStudentProfilePageView {
 
     }
 
+    private User user;
+
     @FXML
     void initialize() {
         this.initUserNames();
-        //this.loadStudentProjects();
+        this.loadStudentProjects();
     }
 
     private void initUserNames() {
@@ -88,11 +100,10 @@ public class AccountStudentProfilePageView {
             this.accountHeader.setText(firstName);
 
             if (AccountContext.getInstance().hasUserToView()) {
-                User viewed = AccountContext.getInstance().getUserToView();
-                this.labelFullName.setText(viewed.getFirstName() + " " + viewed.getLastName());
-                this.labelEmail.setText(viewed.getEmail());
-                this.labelRole.setText(viewed.getRole());
-                //this.loadUserProjects(viewed);
+                user = AccountContext.getInstance().getUserToView();
+                this.labelFullName.setText(user.getFirstName() + " " + user.getLastName());
+                this.labelEmail.setText(user.getEmail());
+                this.labelRole.setText(user.getRole());
             } else {
                 this.labelFullName.setText("Error: Select Another User");
             }
@@ -102,12 +113,52 @@ public class AccountStudentProfilePageView {
         }
     }
 
-//    void loadStudentProjects() {
-//    	//TODO: Load student projects they may be associated with. No need to implement the view button.
-//    }
+    private void showEventNamesAlert(List<Event> events) {
+        StringBuilder builder = new StringBuilder();
+
+        for (Event event : events) {
+            builder.append("• ").append(event.getTitle()).append("\n");
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Registered Events");
+        alert.setHeaderText("Events for This Student");
+        alert.setContentText(builder.toString());
+
+        alert.showAndWait();
+    }
+
+    void loadStudentProjects() {
+        try {
+            List<int> allEvents = DBEventOps.getRegisteredEvents(user.getUserId());
+
+            for (Event event : allEvents) {
+                this.listStudentProjects.getItems().add(event);
+            }
+
+
+
+            // show alert popup with event names
+            showEventNamesAlert(allEvents);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void handleLogoutButtonClick(ActionEvent event) {
+        try {
+            Session.getInstance().logout();
+            GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleDeleteUserButtonClick(ActionEvent event) {
+        AccountManager.deleteUser(user.getUserId());
         Session.getInstance().logout();
         GuiHelper.switchView(this.anchorPane, Views.HOMEPAGE);
     }

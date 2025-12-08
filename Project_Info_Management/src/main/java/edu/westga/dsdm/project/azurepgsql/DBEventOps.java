@@ -1,6 +1,7 @@
 package edu.westga.dsdm.project.azurepgsql;
 
 import edu.westga.dsdm.project.model.Event;
+import edu.westga.dsdm.project.model.User;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -157,5 +158,38 @@ public class DBEventOps {
         }
 
         return events;
+    }
+
+    public static void registerStudentToEvent(User teacher, Event event, User student) throws Exception {
+        String sql = "{ CALL register_student_for_event(?, ?, ?) }";
+
+        try {
+            Connection conn = AzurePgsqlServer.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, teacher.getUserId());
+            stmt.setInt(2, event.getEventId());
+            stmt.setInt(3, student.getUserId());
+
+            System.out.println(teacher.getUserId() + ", " + event.getEventId() + ", " + student.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<int> getRegisteredEvents(int userId) throws Exception {
+        String sql = "SELECT * FROM event_registrations WHERE user_id = ?";
+
+        Connection conn = AzurePgsqlServer.getInstance().getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        stmt.setInt(1, userId);
+        ResultSet rs = stmt.executeQuery();
+
+        List<int> list = new ArrayList<>();
+        while (rs.next()) {
+            list.add(mapRow(rs));
+        }
+        return list;
     }
 }

@@ -71,6 +71,10 @@ public class LoginPageView {
 
 			if ("organizer".equalsIgnoreCase(role)) {
 				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Teacher")) {
+				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Student")) {
+				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
 			} else {
 				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
 			}
@@ -95,6 +99,10 @@ public class LoginPageView {
 
 			if ("organizer".equalsIgnoreCase(role)) {
 				GuiHelper.switchView(this.anchorPane, Views.ORGANIZER);
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Teacher")) {
+				GuiHelper.switchView(this.anchorPane, Views.TEACHER_PROFILE);
+			} else if (Session.getInstance().getCurrentUser().getRole().equalsIgnoreCase("Student")) {
+				GuiHelper.switchView(this.anchorPane, Views.STUDENT_PROFILE);
 			} else {
 				GuiHelper.switchView(this.anchorPane, Views.ACCOUNT);
 			}
