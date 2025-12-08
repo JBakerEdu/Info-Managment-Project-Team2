@@ -56,4 +56,20 @@ public class AccountManager {
     public static User findUserByEmail(String email) throws Exception {
         return DBUserOps.findByEmail(email);
     }
+
+
+    /**
+     * Deletes the logged in user by userId
+     *
+     * @param userId the user's ID
+     * @throws Exception if a database connection error occurs
+     */
+    public static void deleteUser(int userId) {
+        try {
+            DBUserOps.deleteUser(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
